@@ -1,0 +1,483 @@
+---
+title: "Corona Africa"
+# author: "Cyrus Herder"
+# date: "3/24/2020"
+output:
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    social: menu
+    #source: embed
+    theme: flatly
+    orientation: rows
+---
+
+
+```{r setup, include=FALSE}
+rm(list = ls())
+library(flexdashboard)
+library(shiny)
+library(shinydashboard)
+library(ggplot2)
+library(ggthemes)
+library(dplyr)
+library(shiny)
+library(countrycode)
+library(rvest)
+library(xml2)
+library(dplyr)
+library(leaflet)
+library(leafpop)
+library(purrr)
+library(tibble)
+library(rgdal)
+#setwd(normalizePath(dirname(rstudioapi::getActiveDocumentContext()$path)))
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+source("Cleaning.R")
+```
+
+Home {data-icon="fa-home"}
+=====================================
+
+
+Row
+-----------------------------------------------------------------------
+
+
+### Total {.value-box}
+
+```{r}
+
+flexdashboard::valueBox(value = paste(format(sum(Africa$Cnf, na.rm = T), big.mark = ","), "", sep = " "), 
+         caption = "Total Confirmed", 
+         icon = "fas fa-user-md", 
+         color = confirmed_color)
+```
+
+### Active {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(sum(Africa$Active, na.rm = T), big.mark = ","), "", sep = " "),
+         caption = "Active", icon = "fas fa-gratipay", 
+         color = active_color)
+
+```
+
+
+
+### Recovered {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(sum(Africa$Rec, na.rm = TRUE), big.mark = ","), " (",
+                       round(100 * sum(Africa$Rec, na.rm = TRUE) / sum(Africa$Cnf), 1), 
+                       "%)", sep = ""), 
+         caption = "Recovered", icon = "fas fa-heartbeat", 
+         color = recovered_color)
+
+```
+
+### Deaths {.value-box}
+
+```{r}
+
+flexdashboard::valueBox(value = paste(format(sum(Africa$Dth, na.rm = TRUE), 
+                                             big.mark = ","), " (",
+                       round(100 * sum(Africa$Dth, na.rm = TRUE) / sum(Africa$Cnf), 1), 
+                       "%)", sep = ""),
+         caption = "Deaths", icon = "fas fa-angellist", 
+         color = death_color)
+```
+
+
+
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+
+### Africa Cases Distribution
+
+```{r}
+AFR <- as.data.frame(Africa %>% filter(AfricaCheck==1)) %>% arrange(desc(Active))
+
+AFR$Country <- factor(AFR$Country, levels = unique(AFR$Country)[order(AFR$Active, decreasing = TRUE)])
+```
+
+```{r df_summary}
+plotly::plot_ly(data = AFR, 
+                x = ~ Country, 
+                y = ~ Active, 
+                type = "bar", 
+                name = "Active",
+                marker = list(color = active_color)) %>%
+  plotly::add_trace(y = ~ Rec, 
+                    name = "Recovered",
+                    marker = list(color = recovered_color)) %>%
+  plotly::add_trace(y = ~ Dth, 
+                    name = "Died",
+                    marker = list(color = death_color)) %>%
+  plotly::layout(barmode = 'stack',
+                 
+                 yaxis = list(title = "Total Cases",
+                              type = "log"),
+                 xaxis = list(title = "",
+                              range = as.character(sort(unique(as.numeric(AFR$Active)),decreasing = FALSE))),
+                 hovermode = "compare", 
+                 margin =  list(b = 10, 
+                                t = 10, 
+                                pad = 2
+                 ))
+
+```
+
+
+
+
+Global Cases Summary {data-orientation=columns data-icon="fa-globe"}
+=====================================
+
+
+Column
+-----------------------------------------------------------------------
+
+### Total Cases
+
+```{r}
+  
+Tt <- max(Totals$TotalCases, na.rm = T)
+
+hc <- hchart(Totals, type = "column", hcaes(x = Year_Month, y = TotalCases)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Total Number of Cases") %>% 
+  hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
+   hc_add_theme(hc_theme_monokai())
+
+hc
+
+```
+
+Column
+-----------------------------------------------------------------------
+
+### Total Cases
+```{r}
+Tt2 <- max(Totals$TotalCases, na.rm = T)
+
+hc <- hchart(Totals, type = "column", hcaes(x = Year_Month, y = TotalCases, group = Categories)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Time Comparison of Coronavirus") %>% 
+  hc_subtitle(text = paste(Tt2,"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+
+```
+
+
+
+
+January - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
+=======================================================================
+
+Row{.tabset}
+-----------------------------------------------------------------------
+
+### Confirmed {data-navmenu="January"}
+```{r}
+Jan <- Overall %>% 
+  filter(Month==1) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables=="Confirmed")
+
+hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "January 2020 Trends") %>% 
+  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+```
+
+### Death vs Recovery {data-navmenu="January"}
+```{r}
+Jan <- Overall %>% 
+  filter(Month==1) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables!="Confirmed")
+
+hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "January 2020 Trends") %>% 
+  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica())
+
+hc
+```
+
+
+February - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
+=======================================================================
+
+Row{.tabset}
+-----------------------------------------------------------------------
+
+
+### Confirmed {data-navmenu="February"}
+```{r}
+Jan <- Overall %>% 
+  filter(Month==2) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables=="Confirmed")
+
+hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "February 2020 Trends") %>% 
+  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+```
+
+### Death vs Recovery {data-navmenu="February"}
+```{r}
+Jan <- Overall %>% 
+  filter(Month==2) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables!="Confirmed")
+
+hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "February 2020 Trends") %>% 
+  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica())
+
+hc
+```
+
+March - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
+=======================================================================
+
+Row{.tabset}
+-----------------------------------------------------------------------
+
+
+### Confirmed {data-navmenu="March"}
+```{r}
+Jan <- Overall %>% 
+  filter(Month==3) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables=="Confirmed")
+
+hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "March 2020 Trends") %>% 
+  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+```
+
+### Death vs Recovery {data-navmenu="March"}
+```{r}
+Jan <- Overall %>% 
+  filter(Month==3) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables!="Confirmed")
+
+hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "March 2020 Trends") %>% 
+  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica())
+
+hc
+```
+
+Africa {data-orientation=rows data-icon="fa-globe-africa"}
+=====================================
+
+Row
+-----------------------------------------------------------------------
+
+### Total {.value-box}
+
+```{r}
+
+flexdashboard::valueBox(value = paste(format(sum(AFR$Cnf, na.rm = T), big.mark = ","), "", sep = " "), 
+         caption = "Total Confirmed", 
+         icon = "fas fa-user-md", 
+         color = confirmed_color)
+```
+
+### Active {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(sum(AFR$Active, na.rm = T), big.mark = ","), "", sep = " "),
+         caption = "Active", icon = "fas fa-gratipay", 
+         color = active_color)
+
+```
+
+
+
+### Recovered {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(sum(AFR$Rec, na.rm = TRUE), big.mark = ","), " (",
+                       round(100 * sum(AFR$Rec, na.rm = TRUE) / sum(AFR$Cnf), 1), 
+                       "%)", sep = ""), 
+         caption = "Recovered", icon = "fas fa-heartbeat", 
+         color = recovered_color)
+
+```
+
+### Deaths {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(sum(AFR$Dth, na.rm = TRUE), 
+                                             big.mark = ","), " (",
+                       round(100 * sum(AFR$Dth, na.rm = TRUE) / sum(AFR$Cnf), 1), 
+                       "%)", sep = ""),
+         caption = "Deaths", icon = "fas fa-angellist", 
+         color = death_color)
+```
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+### African Region
+
+```{r}
+#add africa countries boundaries
+africa_countries <- readOGR(paste0("Africa/africa_countries.shp"), verbose = FALSE)
+colnames(africa_countries@data) <- c("Country", "Long", "Lat")
+
+africa_countries@data <-africa_countries@data %>%
+  mutate(Country = as.character(Country),
+         Country =  ifelse(Country=="Cape Verde","Cabo Verde",
+                          ifelse(Country=="RÃfÂ©union","Reunion" ,
+                                 ifelse(Country=="Mayotte","Mayotte",Country))))
+
+
+AFR$Country <- as.character(AFR$Country)
+
+
+d <- merge(africa_countries, AFR, by.x = "Country", by.y = "Country", duplicateGeoms = T, sort=FALSE, all.x = F)
+
+d@data <-d@data %>% 
+  dplyr::filter(AfricaCheck!=0)
+
+
+bins <- c(0, 10, 20, 50, 100, 200, 500,750, 1000, 1200, 1500, 2000, Inf)
+pal <- colorBin("YlOrRd", domain = d@data$Active, bins = bins)
+#labels <- paste("Total Confirmed: ", d@data$Country.Region, d@data$TotalCases, paste0("People"))
+labels <- sprintf(paste0("<strong>%s</strong><br/>",
+        "Active: ",
+        #d@data$Active,
+        purrr::map(glue::glue("<span style='color: {active_color};'> {d@data$Active}</span>"),htmltools::HTML),
+        
+        "<br>",
+        "Recovered: ",
+        #d@data$Rec,
+        purrr::map(glue::glue("<span style='color: {recovered_color};'> {d@data$Rec}</span>"),htmltools::HTML),
+        "<br>",
+        "Deaths: ",
+        #d@data$Dth,
+        purrr::map(glue::glue("<span style='color: {death_color};'> {d@data$Dth}</span>"),htmltools::HTML),
+        "<br>"
+      ),
+                  d@data$Country, d@data$Active) %>%
+  lapply(htmltools::HTML)
+
+  africa_map <-leaflet() %>% 
+  addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
+  addPolygons(data = d, 
+              fillColor = ~pal(d@data$Active), 
+              weight = 2, opacity = 1,
+              color = "black", dashArray = "3", 
+              fillOpacity = 0.7,
+              highlight = highlightOptions(weight = 5, 
+                                           color = "#666",
+                                           dashArray = "",
+                                           fillOpacity = 0.7,
+                                           bringToFront = TRUE),
+              label = labels, 
+              labelOptions = labelOptions(style = list("font-weight" = "normal", padding = "3px 8px"),
+                                          textsize = "15px", direction = "auto"))  
+ africa_map %>%  addLegend(pal = pal, values = d@data$Active, opacity = 0.7,
+                             title = glue::glue("Africa Cases:<br>(Total Active: {paste('',format(sum(d@data$Active, na.rm=T), big.mark = ','), sep =' ')})"),
+                             position = "bottomright", na.label = "No Cases")
+
+```
+
+Credit {data-icon="fa-award"}
+=======================================================================
+```{r}
+Startdate <- min(Main.df$Dates)
+LatestDates <- max(Main.df$Dates)
+```
+
+**Datasource **
+
+The Dashboard  contains data from the number of Coronavirus confirmed cases, deaths, and recovered cases for every country and every day:
+
+  + _Start:_ `r Startdate`
+  + _Latest Updated:_   `r LatestDates`
+
++ The data is provided by https://github.com/CSSEGISandData/COVID-19 and 
+  - transformed to JSON by https://pomber.github.io/covid19.
+  - [Pomber]("https://pomber.github.io/covid19/timeseries.json")
+
+ 
+**Credits**
+
++ Recognition:
+
+   - Data provided by JHU CSSE
+   - COVID-19 data transformed to JSON by Pomber
+   - Design layout motivated by a Sr Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
+
+
+  
+**Packages**
+
+* Dashboard interface - the [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) package. 
+* Visualization - the [plotly](https://plot.ly/r/) package for the plots, [leaflet](https://rstudio.github.io/leaflet/) for the map and [highchart](http://jkunst.com/highcharter/) for interactive statistics
+
+* Data manipulation - [tidyverse](https://www.tidyverse.org/)
+
+
+**Note**
+
++ __All the data displayed in the site are gathered from these sources,  might sometime show outdated data and will take some time to sync__
+
++ __( Data Updated regularly updated using GitHub Actions.)__
