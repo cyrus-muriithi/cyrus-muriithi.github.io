@@ -446,6 +446,7 @@ Startdate <- min(Main.df$Dates)
 LatestDates <- max(Main.df$Dates)
 ```
 
+
 **Datasource **
 
 The Dashboard  contains data from the number of Coronavirus confirmed cases, deaths, and recovered cases for every country and every day:
@@ -454,8 +455,8 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
   + _Latest Updated:_   `r LatestDates`
 
 + The data is provided by https://github.com/CSSEGISandData/COVID-19 and 
-  - transformed to JSON by https://pomber.github.io/covid19.
-  - [Pomber]("https://pomber.github.io/covid19/timeseries.json")
+  - transformed to JSON by https://pomber.github.io/covid19/timeseries.json
+  - [Pomber](https://github.com/pomber)
 
  
 **Credits**
@@ -481,3 +482,12 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
 + __All the data displayed in the site are gathered from these sources,  might sometime show outdated data and will take some time to sync__
 
 + __( Data Updated regularly updated using GitHub Actions.)__
+
+*CONTACT*
+
+**CYRUS HERDER** 
+
+__[EMAIL](C.Muriithi@cgiar.org)__
+
+
+
