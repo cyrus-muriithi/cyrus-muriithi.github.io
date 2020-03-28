@@ -483,11 +483,13 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
 
 + __( Data Updated regularly updated using GitHub Actions.)__
 
-*CONTACT*
 
-**CYRUS HERDER** 
 
-__[EMAIL](C.Muriithi@cgiar.org)__
+**CONTACT:** 
+
+*CYRUS HERDER*
+
++ <a href="mailto:C.Muriithi@cgiar.org?body=Please send me a copy of your new program!">Send Email</a>
 
 
 
