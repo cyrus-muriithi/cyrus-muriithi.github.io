@@ -1,0 +1,11 @@
+theme: jekyll-theme-slate
+title : Welcome to Cyrus Muriithi Corona Africa Statistics
+description: Its a combine working of using R and Databases to deliver the dashboard
+
+name: "my-website"
+output_dir: "."
+navbar:
+  title: "Corona Africa"
+  left:
+    - text: "Home"
+      href: Corona-Flex.html
