@@ -482,7 +482,7 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
 
 + __All the data displayed in the site are gathered from these sources,  might sometime show outdated data and will take some time to sync__
 
-+ __( Data Updated regularly updated using GitHub Actions.)__
++ __( Data Updated regularly updated using GitHub Actions. Every 4.AM EAT, Kenyan Time)__
 
 
 
@@ -491,6 +491,3 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
 *CYRUS HERDER*
 
 + <a href="mailto:C.Muriithi@cgiar.org?body=Please send me a copy of your new program!">Send Email</a>
-
-
-
