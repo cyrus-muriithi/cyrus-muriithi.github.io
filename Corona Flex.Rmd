@@ -164,6 +164,7 @@ Column
 -----------------------------------------------------------------------
 
 ### Total Cases
+
 ```{r}
 Tt2 <- max(Totals$TotalCases, na.rm = T)
 
@@ -178,8 +179,6 @@ hc <- hchart(Totals, type = "column", hcaes(x = Year_Month, y = TotalCases, grou
 hc
 
 ```
-
-
 
 
 January - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
@@ -285,14 +284,14 @@ Row{.tabset}
 
 ### Confirmed {data-navmenu="March"}
 ```{r}
-Jan <- Overall %>% 
+March <- Overall %>% 
   filter(Month==3) %>% 
   tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
   group_by(Variables,Dates) %>% 
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables=="Confirmed")
 
-hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
@@ -305,14 +304,14 @@ hc
 
 ### Death vs Recovery {data-navmenu="March"}
 ```{r}
-Jan <- Overall %>% 
+March <- Overall %>% 
   filter(Month==3) %>% 
   tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
   group_by(Variables,Dates) %>% 
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
-hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
@@ -322,6 +321,210 @@ hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)
 
 hc
 ```
+
+
+Kenya {data-orientation=rows data-icon="fa-map-marker-alt"}
+=====================================
+
+```{r}
+kenya<- Main.df %>% filter(Country=="Kenya") %>% 
+  mutate(Active = (Confirmed - (Deaths + Recovered)))
+  
+tmonths <- kenya %>% 
+  group_by(Country, Year_Month) %>% 
+  summarise(Confirmed = max(Confirmed, na.rm = T),
+            Deaths = max(Deaths, na.rm = T),
+            Recovered = max(Recovered, na.rm = T)) %>% 
+  group_by(Year_Month) %>% 
+  #ungroup() %>% 
+  summarise(Confirmed = sum(Confirmed, na.rm = T),
+            Deaths = sum(Deaths, na.rm = T),
+            Recovered = sum(Recovered, na.rm = T)) %>% 
+  tidyr::gather(Categories, TotalCases, Confirmed:Recovered)
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Total {.value-box}
+
+```{r}
+
+flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
+         caption = "Total Confirmed", 
+         icon = "fas fa-user-md", 
+         color = confirmed_color)
+```
+
+### Active {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(max(kenya$Active, na.rm = T), big.mark = ","), "", sep = " "),
+         caption = "Active", icon = "fas fa-gratipay", 
+         color = active_color)
+
+```
+
+
+### Recovered {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(max(kenya$Recovered, na.rm = TRUE), big.mark = ","), " (",
+                       round(100 * max(kenya$Recovered, na.rm = TRUE) / max(kenya$Confirmed), 1), 
+                       "%)", sep = ""), 
+         caption = "Recovered", icon = "fas fa-heartbeat", 
+         color = recovered_color)
+
+```
+
+### Deaths {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(max(kenya$Deaths, na.rm = TRUE), 
+                                             big.mark = ","), " (",
+                       round(100 * max(kenya$Deaths, na.rm = TRUE) / max(kenya$Confirmed), 1), 
+                       "%)", sep = ""),
+         caption = "Deaths", icon = "fas fa-angellist", 
+         color = death_color)
+```
+
+
+Column{.tabset}
+-----------------------------------------------------------------------
+
+### Totals 
+
+```{r}
+
+Tt <- max(tmonths$TotalCases, na.rm = T)
+
+hc <- hchart(tmonths, type = "column", hcaes(x = Year_Month, y = TotalCases)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Kenya Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Kenya Total Number of Cases") %>% 
+  hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
+   hc_add_theme(hc_theme_monokai())
+
+hc
+
+```
+
+
+
+### Categorized Cases
+
+```{r}
+Tt2 <- max(tmonths$TotalCases, na.rm = T)
+
+hc <- hchart(tmonths, type = "column", hcaes(x = Year_Month, y = TotalCases, group = Categories)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Kenya Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Kenya Time Comparison of Coronavirus") %>% 
+  hc_subtitle(text = paste(Tt2,"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+
+```
+
+
+
+
+### Daily Trend 
+
+```{r}
+plotly::plot_ly(data = kenya, 
+                x = ~ Dates, 
+                y = ~ Active, 
+                type = "bar", 
+                name = "Active",
+                marker = list(color = active_color)) %>%
+  plotly::add_trace(y = ~ Recovered, 
+                    name = "Recovered",
+                    marker = list(color = recovered_color)) %>%
+  plotly::add_trace(y = ~ Deaths, 
+                    name = "Died",
+                    marker = list(color = death_color)) %>%
+  plotly::layout(barmode = 'stack',
+                 
+                 yaxis = list(title = "Total Cases",
+                              type = "log"),
+                 xaxis = list(title = "",
+                              range = as.character(sort(unique(as.numeric(kenya$Active)),decreasing = FALSE))),
+                 hovermode = "compare", 
+                 margin =  list(b = 10, 
+                                t = 10, 
+                                pad = 2
+                 ))
+```
+
+### Smooth Trend 
+
+```{r}
+smoothtrend <- kenya %>% select(Dates, Confirmed, Active, Recovered, Deaths) %>% 
+  tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
+
+cols<- c("purple","#1197fb","#ff6601","forestgreen")
+hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Kenya Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Kenyan Trends") %>% 
+  hc_subtitle(text = paste(max(smoothtrend$TotalCases, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica()) %>% 
+  hc_colors(cols)
+
+hc
+```
+<!-- April - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"} -->
+<!-- ======================================================================= -->
+
+<!-- Row{.tabset} -->
+<!-- ----------------------------------------------------------------------- -->
+
+
+<!-- ### Confirmed {data-navmenu="March"} -->
+<!-- ```{r} -->
+<!-- Jan <- Overall %>%  -->
+<!--   filter(Month==4) %>%  -->
+<!--   tidyr::gather(Variables, Values, Confirmed:Recovered) %>%  -->
+<!--   group_by(Variables,Dates) %>%  -->
+<!--   summarise(Totals = round(sum(Values, na.rm = T),0)) %>%  -->
+<!--   filter(Variables=="Confirmed") -->
+
+<!-- hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>%  -->
+<!--   hc_xAxis(title = list(text = "Months")) %>%  -->
+<!--   hc_yAxis(title = list(text = "Number of Cases")) %>%  -->
+<!--   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>%  -->
+<!--   hc_title(text = "April 2020 Trends") %>%  -->
+<!--   hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>%  -->
+<!--   hc_add_theme(hc_theme_monokai()) -->
+
+<!-- hc -->
+<!-- ``` -->
+
+<!-- ### Death vs Recovery {data-navmenu="March"} -->
+<!-- ```{r} -->
+<!-- Jan <- Overall %>%  -->
+<!--   filter(Month==4) %>%  -->
+<!--   tidyr::gather(Variables, Values, Confirmed:Recovered) %>%  -->
+<!--   group_by(Variables,Dates) %>%  -->
+<!--   summarise(Totals = round(sum(Values, na.rm = T),0)) %>%  -->
+<!--   filter(Variables!="Confirmed") -->
+
+<!-- hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>%  -->
+<!--   hc_xAxis(title = list(text = "Months")) %>%  -->
+<!--   hc_yAxis(title = list(text = "Number of Cases")) %>%  -->
+<!--   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>%  -->
+<!--   hc_title(text = "April 2020 Trends") %>%  -->
+<!--   hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>%  -->
+<!--   hc_add_theme(hc_theme_darkunica()) -->
+
+<!-- hc -->
+<!-- ``` -->
+
 
 Africa {data-orientation=rows data-icon="fa-globe-africa"}
 =====================================
