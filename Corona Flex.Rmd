@@ -201,7 +201,7 @@ hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "January 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(max(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -216,12 +216,15 @@ Jan <- Overall %>%
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
+tts <- as.numeric((Jan %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+
+
 hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "January 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_darkunica())
 
 hc
@@ -237,19 +240,19 @@ Row{.tabset}
 
 ### Confirmed {data-navmenu="February"}
 ```{r}
-Jan <- Overall %>% 
+Feb <- Overall %>% 
   filter(Month==2) %>% 
   tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
   group_by(Variables,Dates) %>% 
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables=="Confirmed")
 
-hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+hc <- hchart(Feb, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "February 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(max(Feb$Totals, na.rm = T),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -257,19 +260,21 @@ hc
 
 ### Death vs Recovery {data-navmenu="February"}
 ```{r}
-Jan <- Overall %>% 
+Feb <- Overall %>% 
   filter(Month==2) %>% 
   tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
   group_by(Variables,Dates) %>% 
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
-hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+tts <- as.numeric((Feb %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+
+hc <- hchart(Feb, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "February 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_darkunica())
 
 hc
@@ -296,7 +301,7 @@ hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variable
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "March 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(max(March$Totals, na.rm = T),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -311,12 +316,14 @@ March <- Overall %>%
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
+tts <- as.numeric((March %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+
 hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "March 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_darkunica())
 
 hc
@@ -344,7 +351,7 @@ hc <- hchart(April, type = "line", hcaes(x = Dates, y = Totals, group = Variable
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "April 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(max(April$Totals, na.rm = T),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -359,12 +366,14 @@ April <- Overall %>%
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
+tts <- as.numeric((April %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+
 hc <- hchart(April, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "April 2020 Trends") %>% 
-  hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_darkunica())
 
 hc
