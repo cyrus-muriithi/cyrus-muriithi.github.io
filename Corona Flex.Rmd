@@ -216,7 +216,7 @@ Jan <- Overall %>%
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
-tts <- as.numeric((Jan %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+tts <- format(as.numeric((Jan %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
 
 
 hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
@@ -252,7 +252,7 @@ hc <- hchart(Feb, type = "line", hcaes(x = Dates, y = Totals, group = Variables)
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "February 2020 Trends") %>% 
-  hc_subtitle(text = paste(max(Feb$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(format(max(Feb$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -267,7 +267,7 @@ Feb <- Overall %>%
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
-tts <- as.numeric((Feb %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+tts <- format(as.numeric((Feb %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
 
 hc <- hchart(Feb, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
@@ -301,7 +301,7 @@ hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variable
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "March 2020 Trends") %>% 
-  hc_subtitle(text = paste(max(March$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(format(max(March$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -316,7 +316,7 @@ March <- Overall %>%
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
-tts <- as.numeric((March %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+tts <- format(as.numeric((March %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
 
 hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
@@ -351,7 +351,7 @@ hc <- hchart(April, type = "line", hcaes(x = Dates, y = Totals, group = Variable
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "April 2020 Trends") %>% 
-  hc_subtitle(text = paste(max(April$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(format(max(April$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -366,7 +366,7 @@ April <- Overall %>%
   summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
   filter(Variables!="Confirmed")
 
-tts <- as.numeric((April %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt)))
+tts <- format(as.numeric((April %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
 
 hc <- hchart(April, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
@@ -378,6 +378,7 @@ hc <- hchart(April, type = "line", hcaes(x = Dates, y = Totals, group = Variable
 
 hc
 ```
+
 
 
 
@@ -536,52 +537,38 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 
 hc
 ```
-<!-- April - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"} -->
-<!-- ======================================================================= -->
-
-<!-- Row{.tabset} -->
-<!-- ----------------------------------------------------------------------- -->
 
 
-<!-- ### Confirmed {data-navmenu="March"} -->
-<!-- ```{r} -->
-<!-- Jan <- Overall %>%  -->
-<!--   filter(Month==4) %>%  -->
-<!--   tidyr::gather(Variables, Values, Confirmed:Recovered) %>%  -->
-<!--   group_by(Variables,Dates) %>%  -->
-<!--   summarise(Totals = round(sum(Values, na.rm = T),0)) %>%  -->
-<!--   filter(Variables=="Confirmed") -->
+### Confirmed Predictions
 
-<!-- hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>%  -->
-<!--   hc_xAxis(title = list(text = "Months")) %>%  -->
-<!--   hc_yAxis(title = list(text = "Number of Cases")) %>%  -->
-<!--   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>%  -->
-<!--   hc_title(text = "April 2020 Trends") %>%  -->
-<!--   hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>%  -->
-<!--   hc_add_theme(hc_theme_monokai()) -->
+```{r, eval=FALSE}
 
-<!-- hc -->
-<!-- ``` -->
+pred <- Main.df %>% 
+  filter(AfricaCheck==1 & Country=="Kenya") %>% 
+  group_by(Dates) %>% 
+  summarise(Confirmed = round(max(Confirmed, na.rm = T),0),
+            Recovered = round(max(Recovered, na.rm = T),0),
+            Deaths = round(max(Deaths, na.rm = T),0)) %>% select(Dates,Confirmed)
 
-<!-- ### Death vs Recovery {data-navmenu="March"} -->
-<!-- ```{r} -->
-<!-- Jan <- Overall %>%  -->
-<!--   filter(Month==4) %>%  -->
-<!--   tidyr::gather(Variables, Values, Confirmed:Recovered) %>%  -->
-<!--   group_by(Variables,Dates) %>%  -->
-<!--   summarise(Totals = round(sum(Values, na.rm = T),0)) %>%  -->
-<!--   filter(Variables!="Confirmed") -->
 
-<!-- hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>%  -->
-<!--   hc_xAxis(title = list(text = "Months")) %>%  -->
-<!--   hc_yAxis(title = list(text = "Number of Cases")) %>%  -->
-<!--   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>%  -->
-<!--   hc_title(text = "April 2020 Trends") %>%  -->
-<!--   hc_subtitle(text = paste(sum(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>%  -->
-<!--   hc_add_theme(hc_theme_darkunica()) -->
+start.ts = min(pred$Dates)
+end.ts = lubridate::decimal_date(max(pred$Dates))
 
-<!-- hc -->
-<!-- ``` -->
+# ts.df <- pred[,"Confirmed"]
+# tstime.ts <- as.ts(ts(ts.df, start = start.ts, frequency = 7))
+
+ts.df <- as.ts(timeSeries::substituteNA(as.ts(with(pred, zooreg(Confirmed, order.by = Dates, 
+                       frequency = 7))), type = "zeros"))
+plot(ts.df)
+# library("xts")
+# pred.xts <- xts(pred$Confirmed,order.by = pred$Dates)
+p<- forecast(auto.arima(ts.df, stepwise = F, approximation = F), level = 95)
+
+hchart(p)
+
+
+
+```
 
 
 Africa {data-orientation=rows data-icon="fa-globe-africa"}
