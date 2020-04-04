@@ -541,33 +541,29 @@ hc
 
 ### Confirmed Predictions
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 
 pred <- Main.df %>% 
   filter(AfricaCheck==1 & Country=="Kenya") %>% 
   group_by(Dates) %>% 
   summarise(Confirmed = round(max(Confirmed, na.rm = T),0),
             Recovered = round(max(Recovered, na.rm = T),0),
-            Deaths = round(max(Deaths, na.rm = T),0)) %>% select(Dates,Confirmed)
+            Deaths = round(max(Deaths, na.rm = T),0)) %>% select(Dates,Confirmed)%>% 
+  mutate(MY = paste(lubridate::year(Dates),paste0("0",lubridate::month(Dates)), sep = " ")) %>% 
+  group_by(MY) %>% 
+  summarise(Confirmed = max(Confirmed))
 
+#start.ts = as.Date( min(pred$Dates))
+#end.ts = lubridate::decimal_date(max(pred$Dates))
 
-start.ts = min(pred$Dates)
-end.ts = lubridate::decimal_date(max(pred$Dates))
+ts.df <- as.data.frame(pred[,"Confirmed"]) 
 
-# ts.df <- pred[,"Confirmed"]
-# tstime.ts <- as.ts(ts(ts.df, start = start.ts, frequency = 7))
+tstime.ts <- ts(ts.df, start = c(2020,01), frequency = 12)
 
-ts.df <- as.ts(timeSeries::substituteNA(as.ts(with(pred, zooreg(Confirmed, order.by = Dates, 
-                       frequency = 7))), type = "zeros"))
-plot(ts.df)
-# library("xts")
-# pred.xts <- xts(pred$Confirmed,order.by = pred$Dates)
-p<- forecast(auto.arima(ts.df, stepwise = F, approximation = F), level = 95)
-
-hchart(p)
-
-
-
+p<- forecast(tstime.ts, level = 95, h=2)
+hchart(p) %>% 
+  hc_add_theme(hc_theme_darkunica())
+# timetk::tk_tbl(p)
 ```
 
 
