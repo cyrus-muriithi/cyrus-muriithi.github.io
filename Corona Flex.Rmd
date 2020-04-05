@@ -539,31 +539,26 @@ hc
 ```
 
 
+
+
+```{r, eval=FALSE}
 ### Confirmed Predictions
-
-```{r, eval=TRUE}
-
 pred <- Main.df %>% 
   filter(AfricaCheck==1 & Country=="Kenya") %>% 
   group_by(Dates) %>% 
   summarise(Confirmed = round(max(Confirmed, na.rm = T),0),
             Recovered = round(max(Recovered, na.rm = T),0),
-            Deaths = round(max(Deaths, na.rm = T),0)) %>% select(Dates,Confirmed)%>% 
-  mutate(MY = paste(lubridate::year(Dates),paste0("0",lubridate::month(Dates)), sep = " ")) %>% 
-  group_by(MY) %>% 
-  summarise(Confirmed = max(Confirmed))
+            Deaths = round(max(Deaths, na.rm = T),0)) %>% 
+    mutate(yearday = lubridate::yday(Dates)) %>%
+  select(Dates,yearday,Confirmed)#%>% 
 
-#start.ts = as.Date( min(pred$Dates))
-#end.ts = lubridate::decimal_date(max(pred$Dates))
 
-ts.df <- as.data.frame(pred[,"Confirmed"]) 
+myts <- ts(rnorm(length(pred$Dates)),     # random data
+           start = c(2020, as.numeric(format(pred$Dates[1], "%j"))),
+           frequency = 365)
 
-tstime.ts <- ts(ts.df, start = c(2020,01), frequency = 12)
-
-p<- forecast(tstime.ts, level = 95, h=2)
-hchart(p) %>% 
-  hc_add_theme(hc_theme_darkunica())
-# timetk::tk_tbl(p)
+hw <- HoltWinters(myts)
+hchart(forecast(hw,h=2))
 ```
 
 
