@@ -60,8 +60,9 @@ ifelse(Country=="BurkinaFaso","Burkina Faso",
 ifelse(Country=="CaboVerde","Cabo Verde",
 ifelse(Country=="Coted'Ivoire","Ivory Coast",
 ifelse(Country=="SouthAfrica","South Africa",
+ifelse(Country=="SouthSudan","South Sudan",
 ifelse(Country=="DRC","Ivory Coast",
-ifelse(Country=="CentralAfricanRepublic","Central African Republic",Country)))))))))
+ifelse(Country=="CentralAfricanRepublic","Central African Republic",Country))))))))))
 
 #"Sao Tome and Principe"
 
