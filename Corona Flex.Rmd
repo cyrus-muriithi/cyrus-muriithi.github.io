@@ -133,6 +133,36 @@ plotly::plot_ly(data = AFR,
 ```
 
 
+### Global Smooth Trend 
+
+```{r}
+smoothtrend <- Main.df %>% #filter(AfricaCheck==1) %>% 
+  mutate(Active = Confirmed - (Recovered+Deaths)) %>% 
+  group_by(Dates,Country) %>% 
+  summarise(Confirmed = max(Confirmed, na.rm = T),
+            Active = max(Active, na.rm = T),
+            Recovered = max(Recovered, na.rm = T),
+            Deaths = max(Deaths, na.rm = T)) %>% 
+  group_by(Dates) %>% 
+  summarise(Confirmed = sum(Confirmed, na.rm = T),
+            Active = sum(Active, na.rm = T),
+            Recovered = sum(Recovered, na.rm = T),
+            Deaths = sum(Deaths, na.rm = T)) %>% 
+  
+  tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
+
+cols<- c("purple","#1197fb","#ff6601","forestgreen")
+hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Global Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Global Trends") %>% 
+  hc_subtitle(text = paste(max(smoothtrend$TotalCases, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica()) %>% 
+  hc_colors(cols)
+
+hc
+```
 
 
 Global Cases Summary {data-orientation=columns data-icon="fa-globe"}
@@ -519,7 +549,7 @@ plotly::plot_ly(data = kenya,
                  ))
 ```
 
-### Smooth Trend 
+### Kenya Smooth Trend 
 
 ```{r}
 smoothtrend <- kenya %>% select(Dates, Confirmed, Active, Recovered, Deaths) %>% 
@@ -586,7 +616,6 @@ flexdashboard::valueBox(value = paste(format(sum(AFR$Active, na.rm = T), big.mar
          color = active_color)
 
 ```
-
 
 
 ### Recovered {.value-box}
@@ -677,6 +706,38 @@ labels <- sprintf(paste0("<strong>%s</strong><br/>",
                              title = glue::glue("Africa Cases:<br>(Total Active: {paste('',format(sum(d@data$Active, na.rm=T), big.mark = ','), sep =' ')})"),
                              position = "bottomright", na.label = "No Cases")
 
+```
+
+
+### Africa Smooth Trend 
+
+```{r}
+smoothtrend <- Main.df %>% filter(AfricaCheck==1) %>% 
+  mutate(Active = Confirmed - (Recovered+Deaths)) %>% 
+  group_by(Dates,Country) %>% 
+  summarise(Confirmed = max(Confirmed, na.rm = T),
+            Active = max(Active, na.rm = T),
+            Recovered = max(Recovered, na.rm = T),
+            Deaths = max(Deaths, na.rm = T)) %>% 
+  group_by(Dates) %>% 
+  summarise(Confirmed = sum(Confirmed, na.rm = T),
+            Active = sum(Active, na.rm = T),
+            Recovered = sum(Recovered, na.rm = T),
+            Deaths = sum(Deaths, na.rm = T)) %>% 
+  
+  tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
+
+cols<- c("purple","#1197fb","#ff6601","forestgreen")
+hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Africa Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Africa Trends") %>% 
+  hc_subtitle(text = paste(max(smoothtrend$TotalCases, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica()) %>% 
+  hc_colors(cols)
+
+hc
 ```
 
 Credit {data-icon="fa-award"}
