@@ -705,7 +705,6 @@ labels <- sprintf(paste0("<strong>%s</strong><br/>",
  africa_map %>%  addLegend(pal = pal, values = d@data$Active, opacity = 0.7,
                              title = glue::glue("Africa Cases:<br>(Total Active: {paste('',format(sum(d@data$Active, na.rm=T), big.mark = ','), sep =' ')})"),
                              position = "bottomright", na.label = "No Cases")
-
 ```
 
 
@@ -769,7 +768,6 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
    - Design layout motivated by a Sr Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
 
 
-  
 **Packages**
 
 * Dashboard interface - the [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) package. 
@@ -783,7 +781,6 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
 + __All the data displayed in the site are gathered from these sources,  might sometime show outdated data and will take some time to sync__
 
 + __( Data Updated regularly updated using GitHub Actions. Every 3.AM EAT, Kenyan Time)__
-
 
 
 **CONTACT:** 
