@@ -157,7 +157,7 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Global Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "Global Trends") %>% 
-  hc_subtitle(text = paste(max(smoothtrend$TotalCases, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(format(max(smoothtrend$TotalCases, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_darkunica()) %>% 
   hc_colors(cols)
 
@@ -231,7 +231,7 @@ hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "January 2020 Trends") %>% 
-  hc_subtitle(text = paste(max(Jan$Totals, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(format(max(Jan$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_monokai())
 
 hc
@@ -561,7 +561,7 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Kenya Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "Kenyan Trends") %>% 
-  hc_subtitle(text = paste(max(smoothtrend$TotalCases, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(format(max(smoothtrend$TotalCases, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_darkunica()) %>% 
   hc_colors(cols)
 
@@ -732,7 +732,7 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Africa Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "Africa Trends") %>% 
-  hc_subtitle(text = paste(max(smoothtrend$TotalCases, na.rm = T),"Cases", sep = " ")) %>% 
+  hc_subtitle(text = paste(format(max(smoothtrend$TotalCases, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
   hc_add_theme(hc_theme_darkunica()) %>% 
   hc_colors(cols)
 
