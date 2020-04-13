@@ -65,8 +65,6 @@ flexdashboard::valueBox(value = paste(format(sum(Africa$Active, na.rm = T), big.
 
 ```
 
-
-
 ### Recovered {.value-box}
 
 ```{r}
@@ -89,8 +87,6 @@ flexdashboard::valueBox(value = paste(format(sum(Africa$Dth, na.rm = TRUE),
          caption = "Deaths", icon = "fas fa-angellist", 
          color = death_color)
 ```
-
-
 
 
 Row {.tabset .tabset-fade}
