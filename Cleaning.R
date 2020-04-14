@@ -63,13 +63,15 @@ ifelse(Country=="SouthAfrica","South Africa",
 ifelse(Country=="SouthSudan","South Sudan",
 ifelse(Country=="SierraLeone","Sierra Leone",     
 ifelse(Country=="DRC","Ivory Coast",
-ifelse(Country=="CentralAfricanRepublic","Central African Republic",Country)))))))))))
-
-#"Sao Tome and Principe"
+ifelse(Country=="Mayotte,France","Mayotte",
+ifelse(Country=="EquatorialGuinea","Equatorial Guinea",
+ifelse(Country=="SaoTomeandPrincipe","Sao Tome and Principe",
+ifelse(Country=="CentralAfricanRepublic","Central African Republic",Country))))))))))))))
 
 Main.df<- Main.df %>% 
   mutate(AfricaCheck = ifelse(Country=="Algeria",1,
 ifelse(Country=="Benin",1,
+ifelse(Country=="Mayotte",1,
 ifelse(Country=="Burkina Faso",1,
 ifelse(Country=="Cameroon",1,
 ifelse(Country=="Cabo Verde",1,
@@ -98,7 +100,7 @@ ifelse(Country=="Botswana",1,
 ifelse(Country=="Burundi",1,
 ifelse(Country=="Eswatini",1,
 ifelse(Country=="Seychelles",1,
-ifelse(Country=="Central African Republic",1,0))))))))))))))))))))))))))))))))
+ifelse(Country=="Central African Republic",1,0)))))))))))))))))))))))))))))))))
 
 Main.df<- Main.df %>% 
   mutate(AfricaCheck = 
@@ -118,12 +120,13 @@ ifelse(Country=="Morocco",1,
 ifelse(Country=="Namibia",1,
 ifelse(Country=="Nigeria",1,
 ifelse(Country=="Rwanda",1,
+ifelse(Country=="Sao Tome and Principe",1,
 ifelse(Country=="Somalia",1,
 ifelse(Country=="South Sudan",1,
 ifelse(Country=="Sudan",1,
 ifelse(Country=="Tanzania",1,
 ifelse(Country=="Tunisia",1,
-ifelse(Country=="Zimbabwe",1,AfricaCheck)))))))))))))))))))))))
+ifelse(Country=="Zimbabwe",1,AfricaCheck))))))))))))))))))))))))
 #-------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------
 ### Auto select Yesterdays Date

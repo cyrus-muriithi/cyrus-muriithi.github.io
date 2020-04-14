@@ -700,7 +700,7 @@ labels <- sprintf(paste0("<strong>%s</strong><br/>",
               labelOptions = labelOptions(style = list("font-weight" = "normal", padding = "3px 8px"),
                                           textsize = "15px", direction = "auto"))  
  africa_map %>%  addLegend(pal = pal, values = d@data$Active, opacity = 0.7,
-                             title = glue::glue("Africa Cases:<br>(Total Active: {paste('',format(sum(d@data$Active, na.rm=T), big.mark = ','), sep =' ')})"),
+                             title = glue::glue("{sum(AFR$AfricaCheck, na.rm=T)} Countries Cases:<br>(Total Active: {paste('',format(sum(d@data$Active, na.rm=T), big.mark = ','), sep =' ')})"),
                              position = "bottomright", na.label = "No Cases")
 ```
 
