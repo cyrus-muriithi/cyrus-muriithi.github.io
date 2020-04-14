@@ -650,7 +650,8 @@ africa_countries@data <-africa_countries@data %>%
   mutate(Country = as.character(Country),
          Country =  ifelse(Country=="Cape Verde","Cabo Verde",
                           ifelse(Country=="RÃfÂ©union","Reunion" ,
-                                 ifelse(Country=="Mayotte","Mayotte",Country))))
+                                 ifelse(Country=="Eswatini\r\nEswatini\r\nEswatini","Eswatini" ,
+                                 ifelse(Country=="Mayotte","Mayotte",Country)))))
 
 
 AFR$Country <- as.character(AFR$Country)
@@ -690,8 +691,8 @@ labels <- sprintf(paste0("<strong>%s</strong><br/>",
               weight = 2, opacity = 1,
               color = "black", dashArray = "3", 
               fillOpacity = 0.7,
-              highlight = highlightOptions(weight = 5, 
-                                           color = "#666",
+              highlight = highlightOptions(weight = 2.5, 
+                                           color = "#0000f7",
                                            dashArray = "",
                                            fillOpacity = 0.7,
                                            bringToFront = TRUE),

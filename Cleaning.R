@@ -96,8 +96,9 @@ ifelse(Country=="Zambia",1,
 ifelse(Country=="Angola",1,
 ifelse(Country=="Botswana",1,
 ifelse(Country=="Burundi",1,
+ifelse(Country=="Eswatini",1,
 ifelse(Country=="Seychelles",1,
-ifelse(Country=="Central African Republic",1,0)))))))))))))))))))))))))))))))
+ifelse(Country=="Central African Republic",1,0))))))))))))))))))))))))))))))))
 
 Main.df<- Main.df %>% 
   mutate(AfricaCheck = 
