@@ -566,25 +566,78 @@ hc
 
 
 
+### Kenya Counties
 
-```{r, eval=FALSE}
-### Confirmed Predictions
-pred <- Main.df %>% 
-  filter(AfricaCheck==1 & Country=="Kenya") %>% 
-  group_by(Dates) %>% 
-  summarise(Confirmed = round(max(Confirmed, na.rm = T),0),
-            Recovered = round(max(Recovered, na.rm = T),0),
-            Deaths = round(max(Deaths, na.rm = T),0)) %>% 
-    mutate(yearday = lubridate::yday(Dates)) %>%
-  select(Dates,yearday,Confirmed)#%>% 
+```{r}
+source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\Kenyan Counties.R")
 
 
-myts <- ts(rnorm(length(pred$Dates)),     # random data
-           start = c(2020, as.numeric(format(pred$Dates[1], "%j"))),
-           frequency = 365)
+require("rgdal")
+require("dplyr")
 
-hw <- HoltWinters(myts)
-hchart(forecast(hw,h=2))
+ken_regions <- readOGR("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\KEN_adm_shp","KEN_adm1", verbose = F, stringsAsFactors = FALSE)
+ken_boundaries <- readOGR("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\KEN_adm_shp","KEN_adm0", verbose = F, stringsAsFactors = FALSE)
+
+ken_regions@data$NAME_1 <- as.character(ken_regions@data$NAME_1)
+ken_regions@data <- left_join(ken_regions@data, Counties,by ="NAME_1")
+
+require("leaflet")
+county_map <- leaflet(ken_regions) %>%
+  #setView(40.01, -1.835, zoom = 6) %>% 
+  addProviderTiles(providers$OpenStreetMap)#,options = providerTileOptions(minZoom=6, maxZoom=8)) 
+
+bins <- c(0,10,30,50,100,250)
+pal <- colorBin("YlOrRd", domain = ken_regions@data$Cases, bins = bins)
+confirmed_color <- "purple"
+ppercent <- "#db1919"
+
+
+labels <- sprintf(
+  paste0("<strong>%s</strong><br/>",
+    "Cases: ",
+    purrr::map(glue::glue("<span style='color: {confirmed_color};'>
+                          {ken_regions@data$Cases}</span>"),htmltools::HTML),
+    "<br>",
+    "Percent: ",
+    purrr::map(glue::glue("<span style='color: {ppercent};'>
+                          {ken_regions@data$Percent}</span>"),htmltools::HTML)
+  ),
+  ken_regions@data$NAME_1, ken_regions@data$Cases,ken_regions@data$Percent
+) %>% lapply(htmltools::HTML)
+
+county_map <- county_map %>% 
+  addPolygons(data=ken_boundaries,
+              weight = 2,opacity = 1,
+              color = "white",dashArray = "3",
+              fillOpacity = 0.7,
+              highlight = highlightOptions(
+                weight = 5,color = "#0000f7",
+                dashArray = "",fillOpacity = 0.7,
+                bringToFront = FALSE))%>%
+  addPolygons(
+    fillColor = ~pal(Cases),
+    weight = 2,opacity = 1,
+    color = "#007c00",dashArray = "3",
+    fillOpacity = 0.7,
+    highlight = highlightOptions(
+      weight = 2.5,color = "#0000f7",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE),
+    label = labels,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", 
+                   padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto"))
+
+county_map %>% addLegend(pal = pal, 
+                         values = ~Cases, 
+                         opacity = 0.5,
+                         #title = "Number of Cases:<br>(Confirmed)",
+                         title = glue::glue("{nrow(Counties)} Counties:<br>(Confirmed Cases: {paste('',format(sum(ken_regions@data$Cases, na.rm=T), big.mark = ','), sep =' ')})"),
+                         position = "bottomright", na.label = "No Cases")
+
 ```
 
 
