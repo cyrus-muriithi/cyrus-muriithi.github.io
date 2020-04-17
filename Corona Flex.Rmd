@@ -9,7 +9,6 @@ output:
     #source: embed
     theme: flatly
     orientation: rows
-    
 ---
 
 
@@ -569,6 +568,10 @@ hc
 ### Kenya Counties
 
 ```{r}
+# library(utils)
+# message <- "This data is not upto date,its Very difficult to get Collated data from Kenyan Govt"
+#winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"), message)
+
 source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\Kenyan Counties.R")
 
 
@@ -637,6 +640,7 @@ county_map %>% addLegend(pal = pal,
                          #title = "Number of Cases:<br>(Confirmed)",
                          title = glue::glue("{nrow(Counties)} Counties:<br>(Confirmed Cases: {paste('',format(sum(ken_regions@data$Cases, na.rm=T), big.mark = ','), sep =' ')})"),
                          position = "bottomright", na.label = "No Cases")
+
 
 ```
 
@@ -788,6 +792,12 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 
 hc
 ```
+
+Big 5 Comparison {data-icon="fa-award"}
+=======================================================================
+
+
+
 
 Credit {data-icon="fa-award"}
 =======================================================================
