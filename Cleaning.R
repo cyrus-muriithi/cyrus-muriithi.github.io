@@ -213,3 +213,9 @@ recovered_color <- "forestgreen"
 death_color <- "#ff6601"
 # active_color <- "#ef9b0f"
 
+#-------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------------
+saveRDS(Main.df, file = "C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\shiny_trend\\Corona.RDS")
+
+
+

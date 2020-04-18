@@ -30,6 +30,9 @@ library(leafpop)
 library(purrr)
 library(tibble)
 library(rgdal)
+require("rgdal")
+require("dplyr")
+require("leaflet")
 #setwd(normalizePath(dirname(rstudioapi::getActiveDocumentContext()$path)))
 ```
 
@@ -575,16 +578,15 @@ hc
 source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\Kenyan Counties.R")
 
 
-require("rgdal")
-require("dplyr")
 
 ken_regions <- readOGR("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\KEN_adm_shp","KEN_adm1", verbose = F, stringsAsFactors = FALSE)
 ken_boundaries <- readOGR("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\KEN_adm_shp","KEN_adm0", verbose = F, stringsAsFactors = FALSE)
 
+Counties$NAME_1<- as.character(Counties$NAME_1)
 ken_regions@data$NAME_1 <- as.character(ken_regions@data$NAME_1)
 ken_regions@data <- left_join(ken_regions@data, Counties,by ="NAME_1")
 
-require("leaflet")
+
 county_map <- leaflet(ken_regions) %>%
   #setView(40.01, -1.835, zoom = 6) %>% 
   addProviderTiles(providers$OpenStreetMap)#,options = providerTileOptions(minZoom=6, maxZoom=8)) 
@@ -795,7 +797,9 @@ hc
 
 Big 5 Comparison {data-icon="fa-award"}
 =======================================================================
+```{r}
 
+```
 
 
 
