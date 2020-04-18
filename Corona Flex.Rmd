@@ -795,8 +795,6 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 hc
 ```
 
-Big 5 Comparison {data-icon="fa-award"}
-=======================================================================
 ```{r}
 
 ```
