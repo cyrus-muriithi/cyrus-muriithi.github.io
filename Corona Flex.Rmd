@@ -568,9 +568,10 @@ hc
 
 
 
+
+```{r, eval=FALSE}
 ### Kenya Counties
 
-```{r}
 # library(utils)
 # message <- "This data is not upto date,its Very difficult to get Collated data from Kenyan Govt"
 #winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"), message)
@@ -806,7 +807,7 @@ Another difficulty has been working out the proportion of people who die after b
 
 Travel restrictions, social distancing and lockdowns across Britain and elsewhere are all intended to suppress transmission of coronavirus.
 
-For interactive Comparative tend, kindly visit:
+For interactive Comparative trend, kindly visit:
 
 <h2> [Trend Analysis](https://cyrusmuriithi.shinyapps.io/CoronaAfrica/)</h2>
 
