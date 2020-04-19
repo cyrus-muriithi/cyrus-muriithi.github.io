@@ -215,7 +215,7 @@ death_color <- "#ff6601"
 
 #-------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------
-saveRDS(Main.df, file = "C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\shiny_trend\\Corona.RDS")
+saveRDS(Main.df, file = "C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\shiny_trend\\CoronaAfrica\\Corona.RDS")
 
 
 

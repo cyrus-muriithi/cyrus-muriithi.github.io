@@ -795,6 +795,21 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 hc
 ```
 
+Comparitive Trend {data-icon="fa-globe"}
+=======================================================================
+
+As COVID-19 continues its silent and sometimes deadly march across the world, what can be learned from those uncertain, early days when it first made an appearance at a food market in Wuhan, China? People, understandably, have questions.
+
+Because countries have taken radically different approaches to testing, and have sometimes changed testing strategies from one week to the next, scientists have struggled to compare case rates between countries.
+
+Another difficulty has been working out the proportion of people who die after becoming infected, because many cases are never confirmed. 
+
+Travel restrictions, social distancing and lockdowns across Britain and elsewhere are all intended to suppress transmission of coronavirus.
+
+For interactive Comparative tend, kindly visit:
+
+<h2> [Trend Analysis](https://cyrusmuriithi.shinyapps.io/CoronaAfrica/)</h2>
+
 ```{r}
 
 ```
