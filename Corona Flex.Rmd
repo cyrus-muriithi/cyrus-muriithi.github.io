@@ -723,7 +723,7 @@ d@data <-d@data %>%
   dplyr::filter(AfricaCheck!=0)
 
 
-bins <- c(0, 25,50,75, 100,250, 500,750, 1000, 1500, 2000, 2500, 3000, Inf)
+bins <- c(0,50, 100, 500, 1000, 2000,3000,4000,5000, Inf)
 pal <- colorBin("YlOrRd", domain = d@data$Active, bins = bins)
 #labels <- paste("Total Confirmed: ", d@data$Country.Region, d@data$TotalCases, paste0("People"))
 labels <- sprintf(paste0("<strong>%s</strong><br/>",
