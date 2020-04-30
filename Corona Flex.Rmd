@@ -14,6 +14,7 @@ output:
 
 ```{r setup, include=FALSE}
 rm(list = ls())
+suppressMessages({
 library(flexdashboard)
 library(shiny)
 library(shinydashboard)
@@ -33,6 +34,7 @@ library(rgdal)
 require("rgdal")
 require("dplyr")
 require("leaflet")
+})
 #setwd(normalizePath(dirname(rstudioapi::getActiveDocumentContext()$path)))
 ```
 
