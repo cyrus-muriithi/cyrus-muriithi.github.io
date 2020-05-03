@@ -411,6 +411,58 @@ hc
 
 
 
+May - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
+=======================================================================
+
+Row{.tabset}
+-----------------------------------------------------------------------
+
+
+### Confirmed {data-navmenu="May"}
+```{r}
+May <- Overall %>% 
+  filter(Month==5) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables=="Confirmed")
+
+hc <- hchart(May, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "May 2020 Trends") %>% 
+  hc_subtitle(text = paste(format(max(May$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+```
+
+### Death vs Recovery {data-navmenu="May"}
+```{r}
+May <- Overall %>% 
+  filter(Month==5) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables!="Confirmed")
+
+tts <- format(as.numeric((May %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
+
+hc <- hchart(May, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "May 2020 Trends") %>% 
+  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica())
+
+hc
+```
+
+
+
+
 
 Kenya {data-orientation=rows data-icon="fa-map-marker-alt"}
 =====================================
