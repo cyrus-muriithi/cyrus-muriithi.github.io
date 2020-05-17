@@ -27,8 +27,6 @@ for (i in seq_along(y)) {
   # beepr::beep()
   filename <-gsub(" ","",names(y)[i])
   data$Country <- filename
-  #print(paste(filename,i, sep = "-"))
-  #assign(filename, data)
   All.df[[i]]<- assign(filename, data)
 }
 
