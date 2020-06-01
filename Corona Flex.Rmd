@@ -460,7 +460,54 @@ hc <- hchart(May, type = "line", hcaes(x = Dates, y = Totals, group = Variables)
 hc
 ```
 
+June - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
+=======================================================================
 
+Row{.tabset}
+-----------------------------------------------------------------------
+
+
+### Confirmed {data-navmenu="June"}
+```{r}
+June <- Overall %>% 
+  filter(Month==6) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables=="Confirmed")
+
+hc <- hchart(June, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "June 2020 Trends") %>% 
+  hc_subtitle(text = paste(format(max(June$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+```
+
+### Death vs Recovery {data-navmenu="June"}
+```{r}
+June <- Overall %>% 
+  filter(Month==6) %>% 
+  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
+  group_by(Variables,Dates) %>% 
+  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
+  filter(Variables!="Confirmed")
+
+tts <- format(as.numeric((June %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
+
+hc <- hchart(June, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "June 2020 Trends") %>% 
+  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica())
+
+hc
+```
 
 
 
