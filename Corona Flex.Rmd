@@ -671,6 +671,7 @@ xxx<- Main.df %>% filter(Country=="Kenya") %>%
                            labels = c("TotalConfirmed","TotalActive","TotalRecovery","TotalDeaths")))
 custom_colours<- viridis(4) 
 custom_colours<-c("#f92672","#65d6ec","#a6e22e","#ff6601")
+custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
 hc <- hchart(xxx, 
              type = "column", 
              hcaes(x = Year_Month, y = TotalCases, group = Category),
@@ -690,8 +691,11 @@ hc
 
 ```{r}
 Tt2 <- max(tmonths$TotalCases, na.rm = T)
+custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
 
-hc <- hchart(tmonths, type = "column", hcaes(x = Year_Month, y = TotalCases, group = Categories)) %>% 
+hc <- hchart(tmonths, 
+             type = "column", 
+             hcaes(x = Year_Month, y = TotalCases, group = Categories)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
   hc_chart(type = "Kenya Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
