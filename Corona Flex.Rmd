@@ -655,11 +655,12 @@ hc
 ```{r}
 
 xxx<- Main.df %>% filter(Country=="Kenya") %>% 
-  group_by(Year_Month) %>% 
+  
   mutate(NewConfirmed = Confirmed - lag(Confirmed, default = first(Confirmed)),
          NewRecoveries = Recovered - lag(Recovered, default = first(Recovered)),
          NewDeaths = Deaths - lag(Deaths, default = first(Deaths)),
          NewActive = NewConfirmed -(NewDeaths+NewRecoveries)) %>% 
+  group_by(Year_Month) %>% 
   summarise(TotalConfirmed = sum(NewConfirmed, na.rm = T),
             TotalRecovery = sum(NewRecoveries, na.rm = T),
             TotalDeaths = sum(NewDeaths, na.rm = T),
@@ -672,6 +673,9 @@ xxx<- Main.df %>% filter(Country=="Kenya") %>%
 custom_colours<- viridis(4) 
 custom_colours<-c("#f92672","#65d6ec","#a6e22e","#ff6601")
 custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
+
+Tt <- format(xxx %>% filter(Category=="TotalConfirmed") %>% select(TotalCases) %>% sum, big.mark = ",")
+
 hc <- hchart(xxx, 
              type = "column", 
              hcaes(x = Year_Month, y = TotalCases, group = Category),
