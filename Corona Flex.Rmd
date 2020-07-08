@@ -211,565 +211,7 @@ hc
 ```
 
 
-January - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
-=======================================================================
 
-Row{.tabset}
------------------------------------------------------------------------
-
-### Confirmed {data-navmenu="January"}
-```{r}
-Jan <- Overall %>% 
-  filter(Month==1) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables=="Confirmed")
-
-hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "January 2020 Trends") %>% 
-  hc_subtitle(text = paste(format(max(Jan$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-### Death vs Recovery {data-navmenu="January"}
-```{r}
-Jan <- Overall %>% 
-  filter(Month==1) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables!="Confirmed")
-
-tts <- format(as.numeric((Jan %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
-
-
-hc <- hchart(Jan, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "January 2020 Trends") %>% 
-  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica())
-
-hc
-```
-
-
-February - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
-=======================================================================
-
-Row{.tabset}
------------------------------------------------------------------------
-
-
-### Confirmed {data-navmenu="February"}
-```{r}
-Feb <- Overall %>% 
-  filter(Month==2) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables=="Confirmed")
-
-hc <- hchart(Feb, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "February 2020 Trends") %>% 
-  hc_subtitle(text = paste(format(max(Feb$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-### Death vs Recovery {data-navmenu="February"}
-```{r}
-Feb <- Overall %>% 
-  filter(Month==2) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables!="Confirmed")
-
-tts <- format(as.numeric((Feb %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
-
-hc <- hchart(Feb, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "February 2020 Trends") %>% 
-  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica())
-
-hc
-```
-
-March - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
-=======================================================================
-
-Row{.tabset}
------------------------------------------------------------------------
-
-
-### Confirmed {data-navmenu="March"}
-```{r}
-March <- Overall %>% 
-  filter(Month==3) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables=="Confirmed")
-
-hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "March 2020 Trends") %>% 
-  hc_subtitle(text = paste(format(max(March$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-### Death vs Recovery {data-navmenu="March"}
-```{r}
-March <- Overall %>% 
-  filter(Month==3) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables!="Confirmed")
-
-tts <- format(as.numeric((March %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
-
-hc <- hchart(March, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "March 2020 Trends") %>% 
-  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica())
-
-hc
-```
-
-
-April - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
-=======================================================================
-
-Row{.tabset}
------------------------------------------------------------------------
-
-
-### Confirmed {data-navmenu="April"}
-```{r}
-April <- Overall %>% 
-  filter(Month==4) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables=="Confirmed")
-
-hc <- hchart(April, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "April 2020 Trends") %>% 
-  hc_subtitle(text = paste(format(max(April$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-### Death vs Recovery {data-navmenu="April"}
-```{r}
-April <- Overall %>% 
-  filter(Month==4) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables!="Confirmed")
-
-tts <- format(as.numeric((April %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
-
-hc <- hchart(April, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "April 2020 Trends") %>% 
-  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica())
-
-hc
-```
-
-
-
-May - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
-=======================================================================
-
-Row{.tabset}
------------------------------------------------------------------------
-
-
-### Confirmed {data-navmenu="May"}
-```{r}
-May <- Overall %>% 
-  filter(Month==5) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables=="Confirmed")
-
-hc <- hchart(May, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "May 2020 Trends") %>% 
-  hc_subtitle(text = paste(format(max(May$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-### Death vs Recovery {data-navmenu="May"}
-```{r}
-May <- Overall %>% 
-  filter(Month==5) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables!="Confirmed")
-
-tts <- format(as.numeric((May %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
-
-hc <- hchart(May, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "May 2020 Trends") %>% 
-  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica())
-
-hc
-```
-
-June - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
-=======================================================================
-
-Row{.tabset}
------------------------------------------------------------------------
-
-
-### Confirmed {data-navmenu="June"}
-```{r}
-June <- Overall %>% 
-  filter(Month==6) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables=="Confirmed")
-
-hc <- hchart(June, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "June 2020 Trends") %>% 
-  hc_subtitle(text = paste(format(max(June$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-### Death vs Recovery {data-navmenu="June"}
-```{r}
-June <- Overall %>% 
-  filter(Month==6) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables!="Confirmed")
-
-tts <- format(as.numeric((June %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
-
-hc <- hchart(June, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "June 2020 Trends") %>% 
-  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica())
-
-hc
-```
-
-
-July - Trends {data-navmenu="Global - Trends" data-icon="fa-signal"}
-=======================================================================
-
-Row{.tabset}
------------------------------------------------------------------------
-
-
-### Confirmed {data-navmenu="July"}
-```{r}
-July <- Overall %>% 
-  filter(Month==7) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables=="Confirmed")
-
-hc <- hchart(July, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "July 2020 Trends") %>% 
-  hc_subtitle(text = paste(format(max(July$Totals, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-### Death vs Recovery {data-navmenu="July"}
-
-```{r}
-July <- Overall %>% 
-  filter(Month==7) %>% 
-  tidyr::gather(Variables, Values, Confirmed:Recovered) %>% 
-  group_by(Variables,Dates) %>% 
-  summarise(Totals = round(sum(Values, na.rm = T),0)) %>% 
-  filter(Variables!="Confirmed")
-
-tts <- format(as.numeric((July %>% group_by(Variables) %>% summarise(tt = max(Totals, na.rm = T))) %>% summarise(tt=sum(tt))),big.mark = ",")
-
-hc <- hchart(July, type = "line", hcaes(x = Dates, y = Totals, group = Variables)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "July 2020 Trends") %>% 
-  hc_subtitle(text = paste(tts,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica())
-
-hc
-```
-
-
-
-Kenya {data-orientation=rows data-icon="fa-map-marker-alt"}
-=====================================
-
-```{r}
-kenya<- Main.df %>% filter(Country=="Kenya") %>% 
-  mutate(Active = (Confirmed - (Deaths + Recovered)))
-  
-tmonths <- kenya %>% 
-  group_by(Country, Year_Month) %>% 
-  summarise(Confirmed = max(Confirmed, na.rm = T),
-            Deaths = max(Deaths, na.rm = T),
-            Recovered = max(Recovered, na.rm = T)) %>% 
-  group_by(Year_Month) %>% 
-  #ungroup() %>% 
-  summarise(Confirmed = sum(Confirmed, na.rm = T),
-            Deaths = sum(Deaths, na.rm = T),
-            Recovered = sum(Recovered, na.rm = T)) %>% 
-  tidyr::gather(Categories, TotalCases, Confirmed:Recovered)
-```
-
-Row
------------------------------------------------------------------------
-
-### Total {.value-box}
-
-```{r}
-
-flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
-         caption = "Total Confirmed", 
-         icon = "fas fa-user-md", 
-         color = confirmed_color)
-```
-
-### Active {.value-box}
-
-```{r}
-flexdashboard::valueBox(value = paste(format(max(kenya$Active, na.rm = T), big.mark = ","), "", sep = " "),
-         caption = "Active", icon = "fas fa-gratipay", 
-         color = active_color)
-
-```
-
-
-### Recovered {.value-box}
-
-```{r}
-flexdashboard::valueBox(value = paste(format(max(kenya$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                       round(100 * max(kenya$Recovered, na.rm = TRUE) / max(kenya$Confirmed), 1), 
-                       "%)", sep = ""), 
-         caption = "Recovered", icon = "fas fa-heartbeat", 
-         color = recovered_color)
-
-```
-
-### Deaths {.value-box}
-
-```{r}
-flexdashboard::valueBox(value = paste(format(max(kenya$Deaths, na.rm = TRUE), 
-                                             big.mark = ","), " (",
-                       round(100 * max(kenya$Deaths, na.rm = TRUE) / max(kenya$Confirmed), 1), 
-                       "%)", sep = ""),
-         caption = "Deaths", icon = "fas fa-angellist", 
-         color = death_color)
-```
-
-
-Column{.tabset}
------------------------------------------------------------------------
-
- 
-
-```{r, eval=FALSE}
-### Totals
-Tt <- max(tmonths$TotalCases, na.rm = T)
-
-hc <- hchart(tmonths, type = "column", hcaes(x = Year_Month, y = TotalCases)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Kenya Cumulative Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "Kenya Cumulative Total Number of Cases") %>% 
-  hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
-   hc_add_theme(hc_theme_monokai())
-
-hc
-
-```
-
-
-### Total  Individual  Months
-
-```{r}
-
-xxx<- Main.df %>% filter(Country=="Kenya") %>% 
-  
-  mutate(NewConfirmed = Confirmed - lag(Confirmed, default = first(Confirmed)),
-         NewRecoveries = Recovered - lag(Recovered, default = first(Recovered)),
-         NewDeaths = Deaths - lag(Deaths, default = first(Deaths)),
-         NewActive = NewConfirmed -(NewDeaths+NewRecoveries)) %>% 
-  group_by(Year_Month) %>% 
-  summarise(TotalConfirmed = sum(NewConfirmed, na.rm = T),
-            TotalRecovery = sum(NewRecoveries, na.rm = T),
-            TotalDeaths = sum(NewDeaths, na.rm = T),
-            TotalActive = sum(NewActive, na.rm = T)) %>% 
-  pivot_longer(TotalConfirmed:TotalActive, names_to = "Category", values_to = "TotalCases") %>% 
-  mutate(Category= as.factor(Category),
-         Category = factor(Category, 
-                           levels = c("TotalConfirmed","TotalActive","TotalRecovery","TotalDeaths"),
-                           labels = c("TotalConfirmed","TotalActive","TotalRecovery","TotalDeaths")))
-custom_colours<- viridis(4) 
-custom_colours<-c("#f92672","#65d6ec","#a6e22e","#ff6601")
-custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
-
-Tt <- format(xxx %>% filter(Category=="TotalConfirmed") %>% select(TotalCases) %>% sum, big.mark = ",")
-
-hc <- hchart(xxx, 
-             type = "column", 
-             hcaes(x = Year_Month, y = TotalCases, group = Category),
-             color = custom_colours ) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Kenya Monthly Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "Kenya Monthly Total Number of Cases") %>% 
-  hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
-   hc_add_theme(hc_theme_monokai())
-
-hc
-```
-
-
-### Categorized Cases
-
-```{r}
-Tt2 <- max(tmonths$TotalCases, na.rm = T)
-custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
-
-hc <- hchart(tmonths, 
-             type = "column", 
-             hcaes(x = Year_Month, y = TotalCases, group = Categories)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Kenya Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "Kenya Time Comparison of Coronavirus") %>% 
-  hc_subtitle(text = paste(Tt2,"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_monokai())
-
-hc
-
-```
-
-
-
-
-### Daily Trend 
-
-```{r}
-plotly::plot_ly(data = kenya, 
-                x = ~ Dates, 
-                y = ~ Active, 
-                type = "bar", 
-                name = "Active",
-                marker = list(color = active_color)) %>%
-  plotly::add_trace(y = ~ Recovered, 
-                    name = "Recovered",
-                    marker = list(color = recovered_color)) %>%
-  plotly::add_trace(y = ~ Deaths, 
-                    name = "Died",
-                    marker = list(color = death_color)) %>%
-  plotly::layout(barmode = 'stack',
-                 
-                 yaxis = list(title = "Total Cases",
-                              type = "log"),
-                 xaxis = list(title = "",
-                              range = as.character(sort(unique(as.numeric(kenya$Active)),decreasing = FALSE))),
-                 hovermode = "compare", 
-                 margin =  list(b = 10, 
-                                t = 10, 
-                                pad = 2
-                 ))
-```
-
-### Kenya Smooth Trend 
-
-```{r}
-smoothtrend <- kenya %>% select(Dates, Confirmed, Active, Recovered, Deaths) %>% 
-  tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
-
-cols<- c("purple","#1197fb","#ff6601","forestgreen")
-hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
-  hc_xAxis(title = list(text = "Months")) %>% 
-  hc_yAxis(title = list(text = "Number of Cases")) %>% 
-  hc_chart(type = "Kenya Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
-  hc_title(text = "Kenyan Trends") %>% 
-  hc_subtitle(text = paste(format(max(smoothtrend$TotalCases, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
-  hc_add_theme(hc_theme_darkunica()) %>% 
-  hc_colors(cols)
-
-hc
-```
-
-
-### Predict Daily new cases 
-
-```{r, results='asis'}
-suppressWarnings({
-source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\C19-trend\\Covid-Prediction Model.R")
-})
-dyplot.prophet(m, forecast)
-```
 
 
 
@@ -999,6 +441,217 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 
 hc
 ```
+
+Kenya {data-orientation=rows data-icon="fa-map-marker-alt"}
+=====================================
+
+```{r}
+kenya<- Main.df %>% filter(Country=="Kenya") %>% 
+  mutate(Active = (Confirmed - (Deaths + Recovered)))
+  
+tmonths <- kenya %>% 
+  group_by(Country, Year_Month) %>% 
+  summarise(Confirmed = max(Confirmed, na.rm = T),
+            Deaths = max(Deaths, na.rm = T),
+            Recovered = max(Recovered, na.rm = T)) %>% 
+  group_by(Year_Month) %>% 
+  #ungroup() %>% 
+  summarise(Confirmed = sum(Confirmed, na.rm = T),
+            Deaths = sum(Deaths, na.rm = T),
+            Recovered = sum(Recovered, na.rm = T)) %>% 
+  tidyr::gather(Categories, TotalCases, Confirmed:Recovered)
+```
+
+Row
+-----------------------------------------------------------------------
+
+### Total {.value-box}
+
+```{r}
+
+flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
+         caption = "Total Confirmed", 
+         icon = "fas fa-user-md", 
+         color = confirmed_color)
+```
+
+### Active {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(max(kenya$Active, na.rm = T), big.mark = ","), "", sep = " "),
+         caption = "Active", icon = "fas fa-gratipay", 
+         color = active_color)
+
+```
+
+
+### Recovered {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(max(kenya$Recovered, na.rm = TRUE), big.mark = ","), " (",
+                       round(100 * max(kenya$Recovered, na.rm = TRUE) / max(kenya$Confirmed), 1), 
+                       "%)", sep = ""), 
+         caption = "Recovered", icon = "fas fa-heartbeat", 
+         color = recovered_color)
+
+```
+
+### Deaths {.value-box}
+
+```{r}
+flexdashboard::valueBox(value = paste(format(max(kenya$Deaths, na.rm = TRUE), 
+                                             big.mark = ","), " (",
+                       round(100 * max(kenya$Deaths, na.rm = TRUE) / max(kenya$Confirmed), 1), 
+                       "%)", sep = ""),
+         caption = "Deaths", icon = "fas fa-angellist", 
+         color = death_color)
+```
+
+
+Column{.tabset}
+-----------------------------------------------------------------------
+
+ 
+
+```{r, eval=FALSE}
+### Totals
+Tt <- max(tmonths$TotalCases, na.rm = T)
+
+hc <- hchart(tmonths, type = "column", hcaes(x = Year_Month, y = TotalCases)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Kenya Cumulative Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Kenya Cumulative Total Number of Cases") %>% 
+  hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
+   hc_add_theme(hc_theme_monokai())
+
+hc
+
+```
+
+
+### Total  Individual  Months
+
+```{r}
+
+xxx<- Main.df %>% filter(Country=="Kenya") %>% 
+  
+  mutate(NewConfirmed = Confirmed - lag(Confirmed, default = first(Confirmed)),
+         NewRecoveries = Recovered - lag(Recovered, default = first(Recovered)),
+         NewDeaths = Deaths - lag(Deaths, default = first(Deaths)),
+         NewActive = NewConfirmed -(NewDeaths+NewRecoveries)) %>% 
+  group_by(Year_Month) %>% 
+  summarise(TotalConfirmed = sum(NewConfirmed, na.rm = T),
+            TotalRecovery = sum(NewRecoveries, na.rm = T),
+            TotalDeaths = sum(NewDeaths, na.rm = T),
+            TotalActive = sum(NewActive, na.rm = T)) %>% 
+  pivot_longer(TotalConfirmed:TotalActive, names_to = "Category", values_to = "TotalCases") %>% 
+  mutate(Category= as.factor(Category),
+         Category = factor(Category, 
+                           levels = c("TotalConfirmed","TotalActive","TotalRecovery","TotalDeaths"),
+                           labels = c("TotalConfirmed","TotalActive","TotalRecovery","TotalDeaths")))
+custom_colours<- viridis(4) 
+custom_colours<-c("#f92672","#65d6ec","#a6e22e","#ff6601")
+custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
+
+Tt <- format(xxx %>% filter(Category=="TotalConfirmed") %>% select(TotalCases) %>% sum, big.mark = ",")
+
+hc <- hchart(xxx, 
+             type = "column", 
+             hcaes(x = Year_Month, y = TotalCases, group = Category),
+             color = custom_colours ) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Kenya Monthly Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Kenya Monthly Total Number of Cases") %>% 
+  hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
+   hc_add_theme(hc_theme_monokai())
+
+hc
+```
+
+
+### Categorized Cases
+
+```{r}
+Tt2 <- max(tmonths$TotalCases, na.rm = T)
+custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
+
+hc <- hchart(tmonths, 
+             type = "column", 
+             hcaes(x = Year_Month, y = TotalCases, group = Categories)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Kenya Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Kenya Time Comparison of Coronavirus") %>% 
+  hc_subtitle(text = paste(Tt2,"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_monokai())
+
+hc
+
+```
+
+
+
+
+### Daily Trend 
+
+```{r}
+plotly::plot_ly(data = kenya, 
+                x = ~ Dates, 
+                y = ~ Active, 
+                type = "bar", 
+                name = "Active",
+                marker = list(color = active_color)) %>%
+  plotly::add_trace(y = ~ Recovered, 
+                    name = "Recovered",
+                    marker = list(color = recovered_color)) %>%
+  plotly::add_trace(y = ~ Deaths, 
+                    name = "Died",
+                    marker = list(color = death_color)) %>%
+  plotly::layout(barmode = 'stack',
+                 
+                 yaxis = list(title = "Total Cases",
+                              type = "log"),
+                 xaxis = list(title = "",
+                              range = as.character(sort(unique(as.numeric(kenya$Active)),decreasing = FALSE))),
+                 hovermode = "compare", 
+                 margin =  list(b = 10, 
+                                t = 10, 
+                                pad = 2
+                 ))
+```
+
+### Kenya Smooth Trend 
+
+```{r}
+smoothtrend <- kenya %>% select(Dates, Confirmed, Active, Recovered, Deaths) %>% 
+  tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
+
+cols<- c("purple","#1197fb","#ff6601","forestgreen")
+hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
+  hc_xAxis(title = list(text = "Months")) %>% 
+  hc_yAxis(title = list(text = "Number of Cases")) %>% 
+  hc_chart(type = "Kenya Daily Trend", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
+  hc_title(text = "Kenyan Trends") %>% 
+  hc_subtitle(text = paste(format(max(smoothtrend$TotalCases, na.rm = T),big.mark = ","),"Cases", sep = " ")) %>% 
+  hc_add_theme(hc_theme_darkunica()) %>% 
+  hc_colors(cols)
+
+hc
+```
+
+
+### Predict Daily new cases 
+
+```{r, results='asis'}
+suppressWarnings({
+source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\C19-trend\\Covid-Prediction Model.R")
+})
+dyplot.prophet(m, forecast)
+```
+
+
 
 Comparitive Trend {data-icon="fa-globe"}
 =======================================================================
