@@ -29,6 +29,8 @@ library("tibble")
 require("rgdal")
 require("dplyr")
 require("leaflet")
+require("fontawesome")  
+require("icon")  
 })
 #setwd(normalizePath(dirname(rstudioapi::getActiveDocumentContext()$path)))
 ```
