@@ -148,7 +148,8 @@ smoothtrend <- Main.df %>% #filter(AfricaCheck==1) %>%
   
   tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
 
-cols<- c("purple","#1197fb","#ff6601","forestgreen")
+#cols<- c("purple","#1197fb","#ff6601","forestgreen")
+cols<- c(active_color,confirmed_color,death_color,recovered_color)
 hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
@@ -426,7 +427,10 @@ smoothtrend <- Main.df %>% filter(AfricaCheck==1) %>%
   
   tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
 
-cols<- c("purple","#1197fb","#ff6601","forestgreen")
+#cols<- c("purple","#1197fb","#ff6601","forestgreen")
+#cols<- c(confirmed_color,active_color,recovered_color,death_color)
+#cols<-  c("#800080","#1197fb","#228b22","#ff6601")
+cols<- c(active_color,confirmed_color,death_color,recovered_color)
 hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
@@ -547,8 +551,8 @@ xxx<- Main.df %>% filter(Country=="Kenya") %>%
          Category = factor(Category, 
                            levels = c("TotalConfirmed","TotalActive","TotalRecovery","TotalDeaths"),
                            labels = c("TotalConfirmed","TotalActive","TotalRecovery","TotalDeaths")))
-custom_colours<- viridis(4) 
-custom_colours<-c("#f92672","#65d6ec","#a6e22e","#ff6601")
+#custom_colours<- viridis(4) 
+#custom_colours<-c("#f92672","#65d6ec","#a6e22e","#ff6601")
 custom_colours<-c("#800080","#1197fb","#228b22","#ff6601")
 
 Tt <- format(xxx %>% filter(Category=="TotalConfirmed") %>% select(TotalCases) %>% sum, big.mark = ",")
@@ -625,7 +629,9 @@ plotly::plot_ly(data = kenya,
 smoothtrend <- kenya %>% select(Dates, Confirmed, Active, Recovered, Deaths) %>% 
   tidyr::gather(Categories, TotalCases,Confirmed: Deaths)
 
-cols<- c("purple","#1197fb","#ff6601","forestgreen")
+#cols<- c("purple","#1197fb","#ff6601","forestgreen")
+#cols<-  c("#800080","#1197fb","#228b22","#ff6601")
+cols<- c(active_color,confirmed_color,death_color,recovered_color)
 hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group = Categories)) %>% 
   hc_xAxis(title = list(text = "Months")) %>% 
   hc_yAxis(title = list(text = "Number of Cases")) %>% 
