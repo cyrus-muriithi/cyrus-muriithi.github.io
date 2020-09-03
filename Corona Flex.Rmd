@@ -703,7 +703,7 @@ The Dashboard  contains data from the number of Coronavirus confirmed cases, dea
 
    - Data provided by JHU CSSE
    - COVID-19 data transformed to JSON by Pomber
-   - Design layout motivated by a Sr Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
+   - Design layout motivated by a Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
 
 
 **Packages**
