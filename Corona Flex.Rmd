@@ -537,10 +537,11 @@ hc
 
 xxx<- Main.df %>% filter(Country=="Kenya") %>% 
   
-  mutate(NewConfirmed = Confirmed - lag(Confirmed, default = first(Confirmed)),
+  mutate(Active = Confirmed - (Recovered + Deaths),
+         NewConfirmed = Confirmed - lag(Confirmed, default = first(Confirmed)),
          NewRecoveries = Recovered - lag(Recovered, default = first(Recovered)),
          NewDeaths = Deaths - lag(Deaths, default = first(Deaths)),
-         NewActive = NewConfirmed -(NewDeaths+NewRecoveries)) %>% 
+         NewActive =abs(  NewConfirmed -(NewDeaths+NewRecoveries))) %>% 
   group_by(Year_Month) %>% 
   summarise(TotalConfirmed = sum(NewConfirmed, na.rm = T),
             TotalRecovery = sum(NewRecoveries, na.rm = T),
