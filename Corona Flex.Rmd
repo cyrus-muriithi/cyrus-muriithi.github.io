@@ -10,7 +10,6 @@ output:
     orientation: rows
 ---
 
-
 ```{r setup, include=FALSE}
 rm(list = ls())
 suppressMessages({
@@ -39,13 +38,9 @@ suppressMessages({
 source("Cleaning.R")
 ```
 
-Home {data-icon="fa-home"}
-=====================================
+# Home {data-icon="fa-home"}
 
-
-Row
------------------------------------------------------------------------
-
+## Row
 
 ### Total {.value-box}
 
@@ -89,10 +84,7 @@ flexdashboard::valueBox(value = paste(format(sum(Africa$Dth, na.rm = TRUE),
          color = death_color)
 ```
 
-
-Row {.tabset .tabset-fade}
------------------------------------------------------------------------
-
+## Row {.tabset .tabset-fade}
 
 ### Africa Cases Distribution
 
@@ -129,8 +121,7 @@ plotly::plot_ly(data = AFR,
 
 ```
 
-
-### Global Smooth Trend 
+### Global Smooth Trend
 
 ```{r}
 smoothtrend <- Main.df %>% #filter(AfricaCheck==1) %>% 
@@ -162,13 +153,9 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 hc
 ```
 
+# Global Cases Summary {data-orientation="columns" data-icon="fa-globe"}
 
-Global Cases Summary {data-orientation=columns data-icon="fa-globe"}
-=====================================
-
-
-Column
------------------------------------------------------------------------
+## Column
 
 ### Total Cases
 
@@ -188,8 +175,7 @@ hc
 
 ```
 
-Column
------------------------------------------------------------------------
+## Column
 
 ### Total Cases
 
@@ -207,11 +193,6 @@ hc <- hchart(Totals, type = "column", hcaes(x = Year_Month, y = TotalCases, grou
 hc
 
 ```
-
-
-
-
-
 
 ```{r, eval=FALSE}
 ### Kenya Counties
@@ -291,12 +272,9 @@ county_map %>% addLegend(pal = pal,
 
 ```
 
+# Africa {data-orientation="rows" data-icon="fa-globe-africa"}
 
-Africa {data-orientation=rows data-icon="fa-globe-africa"}
-=====================================
-
-Row
------------------------------------------------------------------------
+## Row
 
 ### Total {.value-box}
 
@@ -316,7 +294,6 @@ flexdashboard::valueBox(value = paste(format(sum(AFR$Active, na.rm = T), big.mar
          color = active_color)
 
 ```
-
 
 ### Recovered {.value-box}
 
@@ -340,8 +317,7 @@ flexdashboard::valueBox(value = paste(format(sum(AFR$Dth, na.rm = TRUE),
          color = death_color)
 ```
 
-Row {.tabset .tabset-fade}
------------------------------------------------------------------------
+## Row {.tabset .tabset-fade}
 
 ### African Region
 
@@ -408,8 +384,7 @@ labels <- sprintf(paste0("<strong>%s</strong><br/>",
                              position = "bottomright", na.label = "No Cases")
 ```
 
-
-### Africa Smooth Trend 
+### Africa Smooth Trend
 
 ```{r}
 smoothtrend <- Main.df %>% filter(AfricaCheck==1) %>% 
@@ -443,8 +418,7 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 hc
 ```
 
-Kenya {data-orientation=rows data-icon="fa-map-marker-alt"}
-=====================================
+# Kenya {data-orientation="rows" data-icon="fa-map-marker-alt"}
 
 ```{r}
 kenya<- Main.df %>% filter(Country=="Kenya") %>% 
@@ -463,8 +437,7 @@ tmonths <- kenya %>%
   tidyr::gather(Categories, TotalCases, Confirmed:Recovered)
 ```
 
-Row
------------------------------------------------------------------------
+## Row
 
 ### Total {.value-box}
 
@@ -484,7 +457,6 @@ flexdashboard::valueBox(value = paste(format(max(kenya$Active, na.rm = T), big.m
          color = active_color)
 
 ```
-
 
 ### Recovered {.value-box}
 
@@ -508,11 +480,7 @@ flexdashboard::valueBox(value = paste(format(max(kenya$Deaths, na.rm = TRUE),
          color = death_color)
 ```
 
-
-Column{.tabset}
------------------------------------------------------------------------
-
- 
+## Column {.tabset}
 
 ```{r, eval=FALSE}
 ### Totals
@@ -530,8 +498,7 @@ hc
 
 ```
 
-
-### Total  Individual  Months
+### Total Individual Months
 
 ```{r}
 
@@ -572,7 +539,6 @@ hc <- hchart(xxx,
 hc
 ```
 
-
 ### Categorized Cases
 
 ```{r}
@@ -593,10 +559,7 @@ hc
 
 ```
 
-
-
-
-### Daily Trend 
+### Daily Trend
 
 ```{r}
 plotly::plot_ly(data = kenya, 
@@ -624,7 +587,7 @@ plotly::plot_ly(data = kenya,
                  ))
 ```
 
-### Kenya Smooth Trend 
+### Kenya Smooth Trend
 
 ```{r}
 smoothtrend <- kenya %>% select(Dates, Confirmed, Active, Recovered, Deaths) %>% 
@@ -645,8 +608,7 @@ hc <- hchart(smoothtrend, type = "line", hcaes(x = Dates, y = TotalCases, group 
 hc
 ```
 
-
-### Predict Daily new cases 
+### Predict Daily new cases
 
 ```{r, results='asis'}
 suppressWarnings({
@@ -655,77 +617,72 @@ source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\C19-trend\\Covid-Pred
 dyplot.prophet(m, forecast)
 ```
 
-
-
-Comparitive Trend {data-icon="fa-globe"}
-=======================================================================
+# Comparitive Trend {data-icon="fa-globe"}
 
 As COVID-19 continues its silent and sometimes deadly march across the world, what can be learned from those uncertain, early days when it first made an appearance at a food market in Wuhan, China? People, understandably, have questions.
 
 Because countries have taken radically different approaches to testing, and have sometimes changed testing strategies from one week to the next, scientists have struggled to compare case rates between countries.
 
-Another difficulty has been working out the proportion of people who die after becoming infected, because many cases are never confirmed. 
+Another difficulty has been working out the proportion of people who die after becoming infected, because many cases are never confirmed.
 
 Travel restrictions, social distancing and lockdowns across Britain and elsewhere are all intended to suppress transmission of coronavirus.
 
 For interactive Comparative trend, kindly visit:
 
-<h2> [Trend Analysis](https://cyrusmuriithi.shinyapps.io/CoronaAfrica/)</h2>
+<h2>
+
+[Trend Analysis](https://cyrusmuriithi.shinyapps.io/CoronaAfrica/)
+
+</h2>
 
 ```{r}
 
 ```
 
+# Credit {data-icon="fa-award"}
 
-
-Credit {data-icon="fa-award"}
-=======================================================================
 ```{r}
 Startdate <- min(Main.df$Dates)
 LatestDates <- max(Main.df$Dates)
 ```
 
+**Datasource**
 
-**Datasource **
+The Dashboard contains data from the number of Coronavirus confirmed cases, deaths, and recovered cases for every country and every day:
 
-The Dashboard  contains data from the number of Coronavirus confirmed cases, deaths, and recovered cases for every country and every day:
+-   *Start:* `r Startdate`
 
-  + _Start:_ `r Startdate`
-  + _Latest Updated:_   `r LatestDates`
+-   *Latest Updated:* `r LatestDates`
 
-+ The data is provided by https://github.com/CSSEGISandData/COVID-19 and 
-  - transformed to JSON by https://pomber.github.io/covid19/timeseries.json
-  - [Pomber](https://github.com/pomber)
+-   The data is provided by <https://github.com/CSSEGISandData/COVID-19> and
 
- 
+    -   transformed to JSON by <https://pomber.github.io/covid19/timeseries.json>
+    -   [Pomber](https://github.com/pomber)
+
 **Credits**
 
-+ Recognition:
+-   Recognition:
 
-   - Data provided by JHU CSSE
-   - COVID-19 data transformed to JSON by Pomber
-   - Design layout motivated by a Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
-
+    -   Data provided by JHU CSSE
+    -   COVID-19 data transformed to JSON by Pomber
+    -   Design layout motivated by a Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
 
 **Packages**
 
-* Dashboard interface - the [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) package. 
-* Visualization - the [plotly](https://plot.ly/r/) package for the plots, [leaflet](https://rstudio.github.io/leaflet/) for the map and [highchart](http://jkunst.com/highcharter/) for interactive statistics
+-   Dashboard interface - the [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) package.
 
-* Data manipulation - [tidyverse](https://www.tidyverse.org/)
+-   Visualization - the [plotly](https://plot.ly/r/) package for the plots, [leaflet](https://rstudio.github.io/leaflet/) for the map and [highchart](http://jkunst.com/highcharter/) for interactive statistics
 
+-   Data manipulation - [tidyverse](https://www.tidyverse.org/)
 
 **Note**
 
-+ __All the data displayed in the site are gathered from these sources,  might sometime show outdated data and will take some time to sync__
+-   **All the data displayed in the site are gathered from these sources, might sometime show outdated data and will take some time to sync**
 
-+ __( Data Updated regularly updated using GitHub Actions. Every 3.AM EAT, Kenyan Time)__
+-   **( Data Updated regularly updated using GitHub Actions. Every 3.AM EAT, Kenyan Time)**
 
-
-**CONTACT:** 
+**CONTACT:**
 
 *CYRUS HERDER*
 
-+ <a href="mailto:C.Muriithi@cgiar.org?body=Please send me a copy of your new program!">Send Email</a>
-
-
+-   <a href="mailto:C.Muriithi@cgiar.org?body=Please send me a copy of your new program!">Send Email</a>
