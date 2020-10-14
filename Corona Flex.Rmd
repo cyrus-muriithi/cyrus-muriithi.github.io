@@ -452,7 +452,9 @@ flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), bi
 ### Active {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(max(kenya$Active, na.rm = T), big.mark = ","), "", sep = " "),
+
+act<- kenya %>% filter(Dates==stamp_caption)
+flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mark = ","), "", sep = " "),
          caption = "Active", icon = "fas fa-gratipay", 
          color = active_color)
 

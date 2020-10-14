@@ -133,7 +133,7 @@ ifelse(Country=="Zimbabwe",1,AfricaCheck))))))))))))))))))))))))
 require("lubridate")
 stamp <- as.Date(now()) ; stamp_mon <- month(stamp) ; stamp_day <- day(stamp)
 stamp_yest <- paste(stamp_day - 1, sep = "") ; stamp_year <- year(stamp)
-stamp_caption <- paste(stamp_year,paste("0",stamp_mon,sep = ""),stamp_yest, sep = "-")
+stamp_caption <- paste(stamp_year,paste("",stamp_mon,sep = ""),stamp_yest, sep = "-")
 
 Monthly <- Main.df %>% 
   group_by(Country,Year_Month) %>% 
@@ -193,7 +193,9 @@ Overall <- Main.df %>%
 #-------------------------------------------------------------------------------------------
 
 Africa <- Overall %>% 
+  filter(AfricaCheck==1) %>% 
   group_by(Country,AfricaCheck) %>% 
+  #group_by(Country) %>% 
   summarise(Cnf = round(max(Confirmed, na.rm = T),0),
             Rec = round(max(Recovered, na.rm = T),0),
             Dth = round(max(Deaths, na.rm = T),0)) %>% 
