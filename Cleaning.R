@@ -194,6 +194,7 @@ Overall <- Main.df %>%
 
 Africa <- Overall %>% 
   filter(AfricaCheck==1) %>% 
+  filter(Dates==stamp_caption) %>% 
   group_by(Country,AfricaCheck) %>% 
   #group_by(Country) %>% 
   summarise(Cnf = round(max(Confirmed, na.rm = T),0),

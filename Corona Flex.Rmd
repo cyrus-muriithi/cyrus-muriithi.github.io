@@ -463,8 +463,9 @@ flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mar
 ### Recovered {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(max(kenya$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                       round(100 * max(kenya$Recovered, na.rm = TRUE) / max(kenya$Confirmed), 1), 
+act<- kenya %>% filter(Dates==stamp_caption)
+flexdashboard::valueBox(value = paste(format(max(act$Recovered, na.rm = TRUE), big.mark = ","), " (",
+                       round(100 * max(act$Recovered, na.rm = TRUE) / max(act$Confirmed), 1), 
                        "%)", sep = ""), 
          caption = "Recovered", icon = "fas fa-heartbeat", 
          color = recovered_color)
@@ -474,9 +475,10 @@ flexdashboard::valueBox(value = paste(format(max(kenya$Recovered, na.rm = TRUE),
 ### Deaths {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(max(kenya$Deaths, na.rm = TRUE), 
+act<- kenya %>% filter(Dates==stamp_caption)
+flexdashboard::valueBox(value = paste(format(max(act$Deaths, na.rm = TRUE), 
                                              big.mark = ","), " (",
-                       round(100 * max(kenya$Deaths, na.rm = TRUE) / max(kenya$Confirmed), 1), 
+                       round(100 * max(act$Deaths, na.rm = TRUE) / max(act$Confirmed), 1), 
                        "%)", sep = ""),
          caption = "Deaths", icon = "fas fa-angellist", 
          color = death_color)
