@@ -134,6 +134,7 @@ require("lubridate")
 stamp <- as.Date(now()) ; stamp_mon <- month(stamp) ; stamp_day <- day(stamp)
 stamp_yest <- paste(stamp_day - 1, sep = "") ; stamp_year <- year(stamp)
 stamp_caption <- paste(stamp_year,paste("",stamp_mon,sep = ""),stamp_yest, sep = "-")
+stamp_caption<- "2020-10-31"
 
 Monthly <- Main.df %>% 
   group_by(Country,Year_Month) %>% 
