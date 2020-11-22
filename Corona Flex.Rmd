@@ -45,8 +45,14 @@ source("Cleaning.R")
 ### Total {.value-box}
 
 ```{r}
+x<- as.data.frame(Main.df %>% 
+  group_by(Country) %>% 
+  mutate(Ind = seq_len(n()),
+         MInd = max(Ind, na.rm = T)) %>% 
+  filter(Ind==MInd) %>% ungroup() %>%  filter(AfricaCheck==1) %>% 
+  mutate(Active = Confirmed - (Deaths + Recovered)) )
 
-flexdashboard::valueBox(value = paste(format(sum(Africa$Cnf, na.rm = T), big.mark = ","), "", sep = " "), 
+flexdashboard::valueBox(value = paste(format(sum(x$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
          caption = "Total Confirmed", 
          icon = "fas fa-user-md", 
          color = confirmed_color)
@@ -55,7 +61,7 @@ flexdashboard::valueBox(value = paste(format(sum(Africa$Cnf, na.rm = T), big.mar
 ### Active {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(sum(Africa$Active, na.rm = T), big.mark = ","), "", sep = " "),
+flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark = ","), "", sep = " "),
          caption = "Active", icon = "fas fa-gratipay", 
          color = active_color)
 
@@ -64,8 +70,8 @@ flexdashboard::valueBox(value = paste(format(sum(Africa$Active, na.rm = T), big.
 ### Recovered {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(sum(Africa$Rec, na.rm = TRUE), big.mark = ","), " (",
-                       round(100 * sum(Africa$Rec, na.rm = TRUE) / sum(Africa$Cnf), 1), 
+flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big.mark = ","), " (",
+                       round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
                        "%)", sep = ""), 
          caption = "Recovered", icon = "fas fa-heartbeat", 
          color = recovered_color)
@@ -76,9 +82,9 @@ flexdashboard::valueBox(value = paste(format(sum(Africa$Rec, na.rm = TRUE), big.
 
 ```{r}
 
-flexdashboard::valueBox(value = paste(format(sum(Africa$Dth, na.rm = TRUE), 
+flexdashboard::valueBox(value = paste(format(sum(x$Deaths, na.rm = TRUE), 
                                              big.mark = ","), " (",
-                       round(100 * sum(Africa$Dth, na.rm = TRUE) / sum(Africa$Cnf), 1), 
+                       round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
                        "%)", sep = ""),
          caption = "Deaths", icon = "fas fa-angellist", 
          color = death_color)
@@ -95,16 +101,16 @@ AFR$Country <- factor(AFR$Country, levels = unique(AFR$Country)[order(AFR$Active
 ```
 
 ```{r df_summary}
-plotly::plot_ly(data = AFR, 
+plotly::plot_ly(data = x, 
                 x = ~ Country, 
                 y = ~ Active, 
                 type = "bar", 
                 name = "Active",
                 marker = list(color = active_color)) %>%
-  plotly::add_trace(y = ~ Rec, 
+  plotly::add_trace(y = ~ Recovered, 
                     name = "Recovered",
                     marker = list(color = recovered_color)) %>%
-  plotly::add_trace(y = ~ Dth, 
+  plotly::add_trace(y = ~ Deaths, 
                     name = "Died",
                     marker = list(color = death_color)) %>%
   plotly::layout(barmode = 'stack',
@@ -112,7 +118,7 @@ plotly::plot_ly(data = AFR,
                  yaxis = list(title = "Total Cases",
                               type = "log"),
                  xaxis = list(title = "",
-                              range = as.character(sort(unique(as.numeric(AFR$Active)),decreasing = FALSE))),
+                              range = as.character(sort(unique(as.numeric(x$Confirmed)),decreasing = FALSE))),
                  hovermode = "compare", 
                  margin =  list(b = 10, 
                                 t = 10, 
@@ -280,7 +286,22 @@ county_map %>% addLegend(pal = pal,
 
 ```{r}
 
-flexdashboard::valueBox(value = paste(format(sum(AFR$Cnf, na.rm = T), big.mark = ","), "", sep = " "), 
+x<- Main.df %>% 
+  group_by(Country) %>% 
+  mutate(Ind = seq_len(n()),
+         MInd = max(Ind, na.rm = T)) %>% 
+  filter(Ind==MInd) %>% ungroup() %>%  filter(AfricaCheck==1) %>% 
+  mutate(Active = Confirmed - (Deaths + Recovered))
+
+# pander::pander(
+# x %>% filter(AfricaCheck==1) %>% 
+#   summarise(Tot = sum(Confirmed, na.rm = T),
+#             rec = sum(Recovered, na.rm = T), 
+#             Dea = sum(Deaths, na.rm = T), 
+#             act = Tot - (Dea + rec)) 
+# )
+
+flexdashboard::valueBox(value = paste(format(sum(x$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
          caption = "Total Confirmed", 
          icon = "fas fa-user-md", 
          color = confirmed_color)
@@ -289,7 +310,7 @@ flexdashboard::valueBox(value = paste(format(sum(AFR$Cnf, na.rm = T), big.mark =
 ### Active {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(sum(AFR$Active, na.rm = T), big.mark = ","), "", sep = " "),
+flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark = ","), "", sep = " "),
          caption = "Active", icon = "fas fa-gratipay", 
          color = active_color)
 
@@ -298,8 +319,8 @@ flexdashboard::valueBox(value = paste(format(sum(AFR$Active, na.rm = T), big.mar
 ### Recovered {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(sum(AFR$Rec, na.rm = TRUE), big.mark = ","), " (",
-                       round(100 * sum(AFR$Rec, na.rm = TRUE) / sum(AFR$Cnf), 1), 
+flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big.mark = ","), " (",
+                       round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
                        "%)", sep = ""), 
          caption = "Recovered", icon = "fas fa-heartbeat", 
          color = recovered_color)
@@ -309,9 +330,9 @@ flexdashboard::valueBox(value = paste(format(sum(AFR$Rec, na.rm = TRUE), big.mar
 ### Deaths {.value-box}
 
 ```{r}
-flexdashboard::valueBox(value = paste(format(sum(AFR$Dth, na.rm = TRUE), 
+flexdashboard::valueBox(value = paste(format(sum(x$Deaths, na.rm = TRUE), 
                                              big.mark = ","), " (",
-                       round(100 * sum(AFR$Dth, na.rm = TRUE) / sum(AFR$Cnf), 1), 
+                       round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
                        "%)", sep = ""),
          caption = "Deaths", icon = "fas fa-angellist", 
          color = death_color)
@@ -334,10 +355,10 @@ africa_countries@data <-africa_countries@data %>%
                                  ifelse(Country=="Mayotte","Mayotte",Country)))))
 
 
-AFR$Country <- as.character(AFR$Country)
+x$Country <- as.character(x$Country)
 
 
-d <- merge(africa_countries, AFR, by.x = "Country", by.y = "Country", duplicateGeoms = T, sort=FALSE, all.x = F)
+d <- merge(africa_countries, x, by.x = "Country", by.y = "Country", duplicateGeoms = T, sort=FALSE, all.x = F)
 
 d@data <-d@data %>% 
   dplyr::filter(AfricaCheck!=0)
@@ -354,11 +375,11 @@ labels <- sprintf(paste0("<strong>%s</strong><br/>",
         "<br>",
         "Recovered: ",
         #d@data$Rec,
-        purrr::map(glue::glue("<span style='color: {recovered_color};'> {d@data$Rec}</span>"),htmltools::HTML),
+        purrr::map(glue::glue("<span style='color: {recovered_color};'> {d@data$Recovered}</span>"),htmltools::HTML),
         "<br>",
         "Deaths: ",
         #d@data$Dth,
-        purrr::map(glue::glue("<span style='color: {death_color};'> {d@data$Dth}</span>"),htmltools::HTML),
+        purrr::map(glue::glue("<span style='color: {death_color};'> {d@data$Deaths}</span>"),htmltools::HTML),
         "<br>"
       ),
                   d@data$Country, d@data$Active) %>%
@@ -453,7 +474,7 @@ flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), bi
 
 ```{r}
 
-act<- kenya %>% filter(Dates==stamp_caption)
+act<- tail(kenya, n=1) #kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mark = ","), "", sep = " "),
          caption = "Active", icon = "fas fa-gratipay", 
          color = active_color)
@@ -463,7 +484,7 @@ flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mar
 ### Recovered {.value-box}
 
 ```{r}
-act<- kenya %>% filter(Dates==stamp_caption)
+act<-tail(kenya, n=1) #kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Recovered, na.rm = TRUE), big.mark = ","), " (",
                        round(100 * max(act$Recovered, na.rm = TRUE) / max(act$Confirmed), 1), 
                        "%)", sep = ""), 
@@ -475,7 +496,7 @@ flexdashboard::valueBox(value = paste(format(max(act$Recovered, na.rm = TRUE), b
 ### Deaths {.value-box}
 
 ```{r}
-act<- kenya %>% filter(Dates==stamp_caption)
+act<- tail(kenya, n=1)#kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Deaths, na.rm = TRUE), 
                                              big.mark = ","), " (",
                        round(100 * max(act$Deaths, na.rm = TRUE) / max(act$Confirmed), 1), 
