@@ -98,9 +98,15 @@ flexdashboard::valueBox(value = paste(format(sum(x$Deaths, na.rm = TRUE),
 AFR <- as.data.frame(Africa %>% filter(AfricaCheck==1)) %>% arrange(desc(Active))
 
 AFR$Country <- factor(AFR$Country, levels = unique(AFR$Country)[order(AFR$Active, decreasing = TRUE)])
+
+x <- as.data.frame(x  %>% arrange(desc(Active)))
+x$Country <- factor(x$Country, levels = unique(x$Country)[order(x$Active, decreasing = TRUE)])
+
 ```
 
 ```{r df_summary}
+
+
 plotly::plot_ly(data = x, 
                 x = ~ Country, 
                 y = ~ Active, 
@@ -114,16 +120,16 @@ plotly::plot_ly(data = x,
                     name = "Died",
                     marker = list(color = death_color)) %>%
   plotly::layout(barmode = 'stack',
-                 
                  yaxis = list(title = "Total Cases",
                               type = "log"),
                  xaxis = list(title = "",
-                              range = as.character(sort(unique(as.numeric(x$Confirmed)),decreasing = FALSE))),
-                 hovermode = "compare", 
+                              range = as.character(sort(unique(as.numeric(x$Active)),decreasing = FALSE))),
                  margin =  list(b = 10, 
                                 t = 10, 
                                 pad = 2
                  ))
+
+
 
 ```
 
