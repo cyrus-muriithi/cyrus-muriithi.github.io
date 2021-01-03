@@ -47,7 +47,13 @@ names(Main.df)<- c("id", "Country", "Dates","Confirmed","Deaths", "Recovered" )
 #-------------------------------------------------------------------------------------------
 
 Main.df <- Main.df %>% 
-  mutate(Dates = ifelse(Confirmed>96458 & Country=="Kenya",gsub("2020","2021",Dates, ignore.case = T),Dates),
+  group_by(Country) %>% 
+  mutate(RowIDNum = row_number()) %>% 
+  ungroup()
+
+  
+Main.df <- Main.df %>% 
+  mutate(Dates = ifelse(RowIDNum>345,gsub("2020","2021",Dates, ignore.case = T),Dates),
          Dates = lubridate::ymd(Dates),
          Confirmed = as.numeric(Confirmed),
          Deaths = as.numeric(Deaths),
