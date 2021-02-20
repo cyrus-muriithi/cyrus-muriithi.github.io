@@ -104,7 +104,7 @@ x$Country <- factor(x$Country, levels = unique(x$Country)[order(x$Active, decrea
 
 ```
 
-```{r df_summary}
+```{r}
 
 
 plotly::plot_ly(data = x, 
