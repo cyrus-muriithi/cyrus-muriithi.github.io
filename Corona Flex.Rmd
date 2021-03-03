@@ -29,7 +29,7 @@ suppressMessages({
   require("dplyr")
   require("leaflet")
   require("fontawesome")  
-  require("icon")  
+  #require("icon")  
 })
 #setwd(normalizePath(dirname(rstudioapi::getActiveDocumentContext()$path)))
 ```
@@ -356,7 +356,7 @@ colnames(africa_countries@data) <- c("Country", "Long", "Lat")
 africa_countries@data <-africa_countries@data %>%
   mutate(Country = as.character(Country),
          Country =  ifelse(Country=="Cape Verde","Cabo Verde",
-                          ifelse(Country=="R�f©union","Reunion" ,
+                          ifelse(Country=="R?f©union","Reunion" ,
                                  ifelse(Country=="Eswatini\r\nEswatini\r\nEswatini","Eswatini" ,
                                  ifelse(Country=="Mayotte","Mayotte",Country)))))
 
@@ -643,7 +643,7 @@ hc
 
 ```{r, results='asis'}
 suppressWarnings({
-source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\C19-trend\\Covid-Prediction Model.R")
+source("D:\\OneDrive - CGIAR\\Documents\\GithubRepos\\C19-trend\\Covid-Prediction Model.R")
 })
 dyplot.prophet(m, forecast)
 ```
