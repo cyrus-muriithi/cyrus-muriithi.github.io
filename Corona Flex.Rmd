@@ -62,7 +62,7 @@ flexdashboard::valueBox(value = paste(format(sum(x$Confirmed, na.rm = T), big.ma
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark = ","), "", sep = " "),
-         caption = "Active", icon = "fas fa-gratipay", 
+         caption = "Active", icon = "fas fa-hand-holding-heart", 
          color = active_color)
 
 ```
@@ -86,7 +86,7 @@ flexdashboard::valueBox(value = paste(format(sum(x$Deaths, na.rm = TRUE),
                                              big.mark = ","), " (",
                        round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
                        "%)", sep = ""),
-         caption = "Deaths", icon = "fas fa-angellist", 
+         caption = "Deaths", icon = "fas fa-bed", 
          color = death_color)
 ```
 
@@ -317,7 +317,7 @@ flexdashboard::valueBox(value = paste(format(sum(x$Confirmed, na.rm = T), big.ma
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark = ","), "", sep = " "),
-         caption = "Active", icon = "fas fa-gratipay", 
+         caption = "Active", icon = "fas fa-hand-holding-heart", 
          color = active_color)
 
 ```
@@ -340,7 +340,7 @@ flexdashboard::valueBox(value = paste(format(sum(x$Deaths, na.rm = TRUE),
                                              big.mark = ","), " (",
                        round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
                        "%)", sep = ""),
-         caption = "Deaths", icon = "fas fa-angellist", 
+         caption = "Deaths", icon = "fas fa-bed", 
          color = death_color)
 ```
 
@@ -482,7 +482,7 @@ flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), bi
 
 act<- tail(kenya, n=1) #kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mark = ","), "", sep = " "),
-         caption = "Active", icon = "fas fa-gratipay", 
+         caption = "Active", icon = "fas fa-hand-holding-heart", 
          color = active_color)
 
 ```
@@ -507,7 +507,7 @@ flexdashboard::valueBox(value = paste(format(max(act$Deaths, na.rm = TRUE),
                                              big.mark = ","), " (",
                        round(100 * max(act$Deaths, na.rm = TRUE) / max(act$Confirmed), 1), 
                        "%)", sep = ""),
-         caption = "Deaths", icon = "fas fa-angellist", 
+         caption = "Deaths", icon = "fas fa-bed", 
          color = death_color)
 ```
 
