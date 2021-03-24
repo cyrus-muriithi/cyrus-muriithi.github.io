@@ -213,12 +213,12 @@ hc
 # message <- "This data is not upto date,its Very difficult to get Collated data from Kenyan Govt"
 #winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"), message)
 
-source("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\Kenyan Counties.R")
+source("/Users/admin/OneDrive - CGIAR/Documents/GithubRepos/Kenyan Counties.R")
 
 
 
-ken_regions <- readOGR("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\KEN_adm_shp","KEN_adm1", verbose = F, stringsAsFactors = FALSE)
-ken_boundaries <- readOGR("C:\\Users\\Cyrus Muriithi\\Documents\\GithubRepos\\KEN_adm_shp","KEN_adm0", verbose = F, stringsAsFactors = FALSE)
+ken_regions <- readOGR("/Users/admin/OneDrive - CGIAR/Documents/GithubRepos/KEN_adm_shp","KEN_adm1", verbose = F, stringsAsFactors = FALSE)
+ken_boundaries <- readOGR("/Users/admin/OneDrive - CGIAR/Documents/GithubRepos/KEN_adm_shp","KEN_adm0", verbose = F, stringsAsFactors = FALSE)
 
 Counties$NAME_1<- as.character(Counties$NAME_1)
 ken_regions@data$NAME_1 <- as.character(ken_regions@data$NAME_1)
@@ -643,7 +643,7 @@ hc
 
 ```{r, results='asis'}
 suppressWarnings({
-source("D:\\OneDrive - CGIAR\\Documents\\GithubRepos\\C19-trend\\Covid-Prediction Model.R")
+source("/Users/admin/OneDrive - CGIAR/Documents/GithubRepos/C19-trend/Covid-Prediction Model.R")
 })
 dyplot.prophet(m, forecast)
 ```
