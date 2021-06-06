@@ -46,24 +46,24 @@ source("Cleaning.R")
 
 ```{r}
 x<- as.data.frame(Main.df %>% 
-  group_by(Country) %>% 
-  mutate(Ind = seq_len(n()),
-         MInd = max(Ind, na.rm = T)) %>% 
-  filter(Ind==MInd) %>% ungroup() %>%  filter(AfricaCheck==1) %>% 
-  mutate(Active = Confirmed - (Deaths + Recovered)) )
+                    group_by(Country) %>% 
+                    mutate(Ind = seq_len(n()),
+                           MInd = max(Ind, na.rm = T)) %>% 
+                    filter(Ind==MInd) %>% ungroup() %>%  filter(AfricaCheck==1) %>% 
+                    mutate(Active = Confirmed - (Deaths + Recovered)) )
 
 flexdashboard::valueBox(value = paste(format(sum(x$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
-         caption = "Total Confirmed", 
-         icon = "fas fa-user-md", 
-         color = confirmed_color)
+                        caption = "Total Confirmed", 
+                        icon = "fas fa-user-md", 
+                        color = confirmed_color)
 ```
 
 ### Active {.value-box}
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark = ","), "", sep = " "),
-         caption = "Active", icon = "fas fa-hand-holding-heart", 
-         color = active_color)
+                        caption = "Active", icon = "fas fa-hand-holding-heart", 
+                        color = active_color)
 
 ```
 
@@ -71,10 +71,10 @@ flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark 
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                       round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
-                       "%)", sep = ""), 
-         caption = "Recovered", icon = "fas fa-heartbeat", 
-         color = recovered_color)
+                                      round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
+                                      "%)", sep = ""), 
+                        caption = "Recovered", icon = "fas fa-heartbeat", 
+                        color = recovered_color)
 
 ```
 
@@ -84,10 +84,10 @@ flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big
 
 flexdashboard::valueBox(value = paste(format(sum(x$Deaths, na.rm = TRUE), 
                                              big.mark = ","), " (",
-                       round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
-                       "%)", sep = ""),
-         caption = "Deaths", icon = "fas fa-bed", 
-         color = death_color)
+                                      round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
+                                      "%)", sep = ""),
+                        caption = "Deaths", icon = "fas fa-bed", 
+                        color = death_color)
 ```
 
 ## Row {.tabset .tabset-fade}
@@ -172,7 +172,7 @@ hc
 ### Total Cases
 
 ```{r}
-  
+
 Tt <- max(Totals$TotalCases, na.rm = T)
 
 hc <- hchart(Totals, type = "column", hcaes(x = Year_Month, y = TotalCases)) %>% 
@@ -181,7 +181,7 @@ hc <- hchart(Totals, type = "column", hcaes(x = Year_Month, y = TotalCases)) %>%
   hc_chart(type = "Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "Total Number of Cases") %>% 
   hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
-   hc_add_theme(hc_theme_monokai())
+  hc_add_theme(hc_theme_monokai())
 
 hc
 
@@ -237,12 +237,12 @@ ppercent <- "#db1919"
 
 labels <- sprintf(
   paste0("<strong>%s</strong><br/>",
-    "Cases: ",
-    purrr::map(glue::glue("<span style='color: {confirmed_color};'>
+         "Cases: ",
+         purrr::map(glue::glue("<span style='color: {confirmed_color};'>
                           {ken_regions@data$Cases}</span>"),htmltools::HTML),
-    "<br>",
-    "Percent: ",
-    purrr::map(glue::glue("<span style='color: {ppercent};'>
+         "<br>",
+         "Percent: ",
+         purrr::map(glue::glue("<span style='color: {ppercent};'>
                           {ken_regions@data$Percent}</span>"),htmltools::HTML)
   ),
   ken_regions@data$NAME_1, ken_regions@data$Cases,ken_regions@data$Percent
@@ -308,17 +308,17 @@ x<- Main.df %>%
 # )
 
 flexdashboard::valueBox(value = paste(format(sum(x$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
-         caption = "Total Confirmed", 
-         icon = "fas fa-user-md", 
-         color = confirmed_color)
+                        caption = "Total Confirmed", 
+                        icon = "fas fa-user-md", 
+                        color = confirmed_color)
 ```
 
 ### Active {.value-box}
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark = ","), "", sep = " "),
-         caption = "Active", icon = "fas fa-hand-holding-heart", 
-         color = active_color)
+                        caption = "Active", icon = "fas fa-hand-holding-heart", 
+                        color = active_color)
 
 ```
 
@@ -326,10 +326,10 @@ flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark 
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                       round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
-                       "%)", sep = ""), 
-         caption = "Recovered", icon = "fas fa-heartbeat", 
-         color = recovered_color)
+                                      round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
+                                      "%)", sep = ""), 
+                        caption = "Recovered", icon = "fas fa-heartbeat", 
+                        color = recovered_color)
 
 ```
 
@@ -338,10 +338,10 @@ flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Deaths, na.rm = TRUE), 
                                              big.mark = ","), " (",
-                       round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
-                       "%)", sep = ""),
-         caption = "Deaths", icon = "fas fa-bed", 
-         color = death_color)
+                                      round(100 * sum(x$Deaths, na.rm = TRUE) / sum(x$Confirmed), 1), 
+                                      "%)", sep = ""),
+                        caption = "Deaths", icon = "fas fa-bed", 
+                        color = death_color)
 ```
 
 ## Row {.tabset .tabset-fade}
@@ -356,9 +356,9 @@ colnames(africa_countries@data) <- c("Country", "Long", "Lat")
 africa_countries@data <-africa_countries@data %>%
   mutate(Country = as.character(Country),
          Country =  ifelse(Country=="Cape Verde","Cabo Verde",
-                          ifelse(Country=="R?f©union","Reunion" ,
-                                 ifelse(Country=="Eswatini\r\nEswatini\r\nEswatini","Eswatini" ,
-                                 ifelse(Country=="Mayotte","Mayotte",Country)))))
+                           ifelse(Country=="R?f©union","Reunion" ,
+                                  ifelse(Country=="Eswatini\r\nEswatini\r\nEswatini","Eswatini" ,
+                                         ifelse(Country=="Mayotte","Mayotte",Country)))))
 
 
 x$Country <- as.character(x$Country)
@@ -374,24 +374,24 @@ bins <- c(0,1000,10000,20000,30000,40000,50000, Inf)
 pal <- colorBin("YlOrRd", domain = d@data$Active, bins = bins)
 #labels <- paste("Total Confirmed: ", d@data$Country.Region, d@data$TotalCases, paste0("People"))
 labels <- sprintf(paste0("<strong>%s</strong><br/>",
-        "Active: ",
-        #d@data$Active,
-        purrr::map(glue::glue("<span style='color: {active_color};'> {d@data$Active}</span>"),htmltools::HTML),
-        
-        "<br>",
-        "Recovered: ",
-        #d@data$Rec,
-        purrr::map(glue::glue("<span style='color: {recovered_color};'> {d@data$Recovered}</span>"),htmltools::HTML),
-        "<br>",
-        "Deaths: ",
-        #d@data$Dth,
-        purrr::map(glue::glue("<span style='color: {death_color};'> {d@data$Deaths}</span>"),htmltools::HTML),
-        "<br>"
-      ),
-                  d@data$Country, d@data$Active) %>%
+                         "Active: ",
+                         #d@data$Active,
+                         purrr::map(glue::glue("<span style='color: {active_color};'> {d@data$Active}</span>"),htmltools::HTML),
+                         
+                         "<br>",
+                         "Recovered: ",
+                         #d@data$Rec,
+                         purrr::map(glue::glue("<span style='color: {recovered_color};'> {d@data$Recovered}</span>"),htmltools::HTML),
+                         "<br>",
+                         "Deaths: ",
+                         #d@data$Dth,
+                         purrr::map(glue::glue("<span style='color: {death_color};'> {d@data$Deaths}</span>"),htmltools::HTML),
+                         "<br>"
+),
+d@data$Country, d@data$Active) %>%
   lapply(htmltools::HTML)
 
-  africa_map <-leaflet() %>% 
+africa_map <-leaflet() %>% 
   addProviderTiles(providers$Esri.NatGeoWorldMap) %>% 
   addPolygons(data = d, 
               fillColor = ~pal(d@data$Active), 
@@ -406,9 +406,9 @@ labels <- sprintf(paste0("<strong>%s</strong><br/>",
               label = labels, 
               labelOptions = labelOptions(style = list("font-weight" = "normal", padding = "3px 8px"),
                                           textsize = "15px", direction = "auto"))  
- africa_map %>%  addLegend(pal = pal, values = d@data$Active, opacity = 0.7,
-                             title = glue::glue("{sum(AFR$AfricaCheck, na.rm=T)} Countries Cases:<br>(Total Active: {paste('',format(sum(d@data$Active, na.rm=T), big.mark = ','), sep =' ')})"),
-                             position = "bottomright", na.label = "No Cases")
+africa_map %>%  addLegend(pal = pal, values = d@data$Active, opacity = 0.7,
+                          title = glue::glue("{sum(AFR$AfricaCheck, na.rm=T)} Countries Cases:<br>(Total Active: {paste('',format(sum(d@data$Active, na.rm=T), big.mark = ','), sep =' ')})"),
+                          position = "bottomright", na.label = "No Cases")
 ```
 
 ### Africa Smooth Trend
@@ -450,7 +450,7 @@ hc
 ```{r}
 kenya<- Main.df %>% filter(Country=="Kenya") %>% 
   mutate(Active = (Confirmed - (Deaths + Recovered)))
-  
+
 tmonths <- kenya %>% 
   group_by(Country, Year_Month) %>% 
   summarise(Confirmed = max(Confirmed, na.rm = T),
@@ -471,9 +471,9 @@ tmonths <- kenya %>%
 ```{r}
 
 flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), big.mark = ","), "", sep = " "), 
-         caption = "Total Confirmed", 
-         icon = "fas fa-user-md", 
-         color = confirmed_color)
+                        caption = "Total Confirmed", 
+                        icon = "fas fa-user-md", 
+                        color = confirmed_color)
 ```
 
 ### Active {.value-box}
@@ -482,8 +482,8 @@ flexdashboard::valueBox(value = paste(format(max(kenya$Confirmed, na.rm = T), bi
 
 act<- tail(kenya, n=1) #kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mark = ","), "", sep = " "),
-         caption = "Active", icon = "fas fa-hand-holding-heart", 
-         color = active_color)
+                        caption = "Active", icon = "fas fa-hand-holding-heart", 
+                        color = active_color)
 
 ```
 
@@ -492,10 +492,10 @@ flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mar
 ```{r}
 act<-tail(kenya, n=1) #kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                       round(100 * max(act$Recovered, na.rm = TRUE) / max(act$Confirmed), 1), 
-                       "%)", sep = ""), 
-         caption = "Recovered", icon = "fas fa-heartbeat", 
-         color = recovered_color)
+                                      round(100 * max(act$Recovered, na.rm = TRUE) / max(act$Confirmed), 1), 
+                                      "%)", sep = ""), 
+                        caption = "Recovered", icon = "fas fa-heartbeat", 
+                        color = recovered_color)
 
 ```
 
@@ -505,10 +505,10 @@ flexdashboard::valueBox(value = paste(format(max(act$Recovered, na.rm = TRUE), b
 act<- tail(kenya, n=1)#kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Deaths, na.rm = TRUE), 
                                              big.mark = ","), " (",
-                       round(100 * max(act$Deaths, na.rm = TRUE) / max(act$Confirmed), 1), 
-                       "%)", sep = ""),
-         caption = "Deaths", icon = "fas fa-bed", 
-         color = death_color)
+                                      round(100 * max(act$Deaths, na.rm = TRUE) / max(act$Confirmed), 1), 
+                                      "%)", sep = ""),
+                        caption = "Deaths", icon = "fas fa-bed", 
+                        color = death_color)
 ```
 
 ## Column {.tabset}
@@ -523,7 +523,7 @@ hc <- hchart(tmonths, type = "column", hcaes(x = Year_Month, y = TotalCases)) %>
   hc_chart(type = "Kenya Cumulative Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "Kenya Cumulative Total Number of Cases") %>% 
   hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
-   hc_add_theme(hc_theme_monokai())
+  hc_add_theme(hc_theme_monokai())
 
 hc
 
@@ -565,7 +565,7 @@ hc <- hchart(xxx,
   hc_chart(type = "Kenya Monthly Number of Cases", options3d = list(enabled = TRUE, beta = 0, alpha = 0)) %>% 
   hc_title(text = "Kenya Monthly Total Number of Cases") %>% 
   hc_subtitle(text = paste(Tt,"Cases", sep = " ")) %>% 
-   hc_add_theme(hc_theme_monokai())
+  hc_add_theme(hc_theme_monokai())
 
 hc
 ```
@@ -643,7 +643,7 @@ hc
 
 ```{r, results='asis'}
 suppressWarnings({
-source("/Users/admin/OneDrive - CGIAR/Documents/GithubRepos/C19-trend/Covid-Prediction Model.R")
+  source("/Users/admin/OneDrive - CGIAR/Documents/GithubRepos/C19-trend/Covid-Prediction Model.R")
 })
 dyplot.prophet(m, forecast)
 ```
@@ -687,16 +687,16 @@ The Dashboard contains data from the number of Coronavirus confirmed cases, deat
 
 -   The data is provided by <https://github.com/CSSEGISandData/COVID-19> and
 
-    -   transformed to JSON by <https://pomber.github.io/covid19/timeseries.json>
-    -   [Pomber](https://github.com/pomber)
+-   transformed to JSON by <https://pomber.github.io/covid19/timeseries.json>
+-   [Pomber](https://github.com/pomber)
 
 **Credits**
 
 -   Recognition:
 
-    -   Data provided by JHU CSSE
-    -   COVID-19 data transformed to JSON by Pomber
-    -   Design layout motivated by a Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
+-   Data provided by JHU CSSE
+-   COVID-19 data transformed to JSON by Pomber
+-   Design layout motivated by a Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
 
 **Packages**
 
