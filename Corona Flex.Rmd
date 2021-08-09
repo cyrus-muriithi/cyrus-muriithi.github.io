@@ -450,8 +450,7 @@ hc
 
 ```{r}
 kenya<- Main.df %>% filter(Country=="Kenya") %>% 
-  mutate(Active = (Confirmed - (Deaths + Recovered))) %>% 
-  filter(Recovered>0)
+  mutate(Active = (Confirmed - (Deaths + Recovered))) 
 
 tmonths <- kenya %>% 
   group_by(Country, Year_Month) %>% 
