@@ -46,6 +46,7 @@ source("Cleaning.R")
 
 ```{r}
 x<- as.data.frame(Main.df %>% 
+                    filter(Recovered>0) %>% 
                     group_by(Country) %>% 
                     mutate(Ind = seq_len(n()),
                            MInd = max(Ind, na.rm = T)) %>% 

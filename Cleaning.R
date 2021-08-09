@@ -36,10 +36,10 @@ Main.df<- do.call(rbind, All.df)
 Main.df[is.na(Main.df)]<-0
 
 
-Main.df<- Main.df %>% 
-  mutate(recovered = ifelse(date=="2021-8-5" & Country=="Kenya",195685,
-                            ifelse(date=="2021-8-6" & Country=="Kenya",195787,
-                                   ifelse(date=="2021-8-7" & Country=="Kenya",197029,recovered))))
+# Main.df<- Main.df %>% 
+#   mutate(recovered = ifelse(date=="2021-8-5" & Country=="Kenya",195685,
+#                             ifelse(date=="2021-8-6" & Country=="Kenya",195787,
+#                                    ifelse(date=="2021-8-7" & Country=="Kenya",197029,recovered))))
                             
   
 #-------------------------------------------------------------------------------------------
