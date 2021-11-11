@@ -72,9 +72,9 @@ flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark 
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                                      round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
-                                      "%)", sep = ""), 
-                        caption = "Recovered", icon = "fas fa-heartbeat", 
+                                      round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1),
+                                      "%)", sep = ""),
+                        caption = "Recovered", icon = "fas fa-heartbeat",
                         color = recovered_color)
 
 ```
@@ -210,10 +210,6 @@ hc
 ```{r, eval=FALSE}
 ### Kenya Counties
 
-# library(utils)
-# message <- "This data is not upto date,its Very difficult to get Collated data from Kenyan Govt"
-#winDialog(type = c("ok", "okcancel", "yesno", "yesnocancel"), message)
-
 source("/Users/admin/OneDrive - CGIAR/Documents/GithubRepos/Kenyan Counties.R")
 
 
@@ -327,9 +323,9 @@ flexdashboard::valueBox(value = paste(format(sum(x$Active, na.rm = T), big.mark 
 
 ```{r}
 flexdashboard::valueBox(value = paste(format(sum(x$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                                      round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1), 
-                                      "%)", sep = ""), 
-                        caption = "Recovered", icon = "fas fa-heartbeat", 
+                                      round(100 * sum(x$Recovered, na.rm = TRUE) / sum(x$Confirmed), 1),
+                                      "%)", sep = ""),
+                        caption = "Recovered", icon = "fas fa-heartbeat",
                         color = recovered_color)
 
 ```
@@ -493,9 +489,9 @@ flexdashboard::valueBox(value = paste(format(max(act$Active, na.rm = T), big.mar
 ```{r}
 act<-tail(kenya, n=1) #kenya %>% filter(Dates==stamp_caption)
 flexdashboard::valueBox(value = paste(format(max(act$Recovered, na.rm = TRUE), big.mark = ","), " (",
-                                      round(100 * max(act$Recovered, na.rm = TRUE) / max(act$Confirmed), 1), 
-                                      "%)", sep = ""), 
-                        caption = "Recovered", icon = "fas fa-heartbeat", 
+                                      round(100 * max(act$Recovered, na.rm = TRUE) / max(act$Confirmed), 1),
+                                      "%)", sep = ""),
+                        caption = "Recovered", icon = "fas fa-heartbeat",
                         color = recovered_color)
 
 ```
@@ -697,7 +693,6 @@ The Dashboard contains data from the number of Coronavirus confirmed cases, deat
 
 -   Data provided by JHU CSSE
 -   COVID-19 data transformed to JSON by Pomber
--   Design layout motivated by a Colleague: [johnmutua](http://covid19.locus-geosystems.com/)
 
 **Packages**
 
